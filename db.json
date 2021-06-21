@@ -25,6 +25,18 @@
       "postId": 1
     }
   ],
+  "rate": [
+    {
+      "id": 1,
+      "value": 3,
+      "commentId": 1
+    },
+    {
+      "id": 2,
+      "value": 4,
+      "commentId": 2
+    }
+  ],
   "profile": {
     "name": "typicode"
   }
