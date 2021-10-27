@@ -43,25 +43,14 @@ paths:
       description: store new post on server
       operationId: storePost
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                  example: my new post
-                author:
-                  type: string
-                  example: bear
+        $ref: '#/components/requestBodies/PostReq'
       responses:
         2XX:
           description: 200 range response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PostBody'
+                $ref: '#/components/responses/PostResp'
         default:
           description: Default error sample response
   /comments:
@@ -156,21 +145,30 @@ paths:
     summary: operations on individual post
     description: get, delete and update a post
     parameters:
-      - in: path
-        required: true
-        name: postId
-        schema:
-          type: integer
-          minimum: 0
-          example: 5
+      - $ref: '#/components/parameters/PostId'
     get:
       summary: fetch post
       description: get one post from server
       operationId: fetchPost
       responses:
+        '2XX':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/PostResp'
         default:
           description: Default error sample response
 components:
+  parameters:
+    PostId:
+      in: path
+      required: true
+      name: postId
+      schema:
+        type: integer
+        minimum: 0
+        example: 5
   schemas:
     PostBody:
       type: object
@@ -184,3 +182,31 @@ components:
         author:
           type: string
           example: bear
+    NewPostBody:
+      type: object
+      properties:
+        title:
+          type: string
+          example: my new post
+        author:
+          type: string
+          example: bear
+  responses:
+    PostResp:
+      description: post response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PostBody'
+  requestBodies:
+    PostReq:
+      description: post a body for a post
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewPostBody'
+
+  
+  
+ 
