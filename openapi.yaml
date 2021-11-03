@@ -2,211 +2,64 @@ openapi: 3.0.1
 info:
   title: My API
   version: '1.0'
-  description: test for my api
+  description: some api to user for data
+  termsOfService: http://www.example.com
+  contact:
+    email: bear@example.com
+    name: Bear
+    url: http://www.example.com
+  license:
+    name: My License
+    url: http://www.example.com/license
 servers:
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
-    description: test on github
-  - url: http://localhost:{port}
-    variables:
-      port:
-        default: '3000'
-        enum:
-          - '3000'
-          - '3001'
-          - '3002'
-        description: ''
-    description: local json server
-  - url: https://{env}.myapi.com
-    variables:
-      env:
-        default: dev
-        enum:
-          - dev
-          - staging
-          - prod
-        description: ''
-    description: myapi
+    description: development
+  - url: http://localhost:3000
+    variables: {}
+    description: my api server
 paths:
   /posts:
-    summary: post level
-    description: posts on server
+    summary: top level posts operations
+    description: endpoint for fetching posts and adding new posts
     get:
+      tags:
+        - posts
       summary: fetch posts
-      description: returns posts from server
+      description: returns all posts in data
       operationId: fetchPosts
       responses:
         default:
           description: Default error sample response
-    post:
-      summary: new post
-      description: store new post on server
-      operationId: storePost
-      requestBody:
-        $ref: '#/components/requestBodies/PostReq'
-      responses:
-        2XX:
-          description: 200 range response
           content:
             application/json:
-              schema:
-                $ref: '#/components/responses/PostResp'
-        default:
-          description: Default error sample response
-  /comments:
-    summary: fetch comments and other operations
-    description: comments from data source
-    get:
-      summary: fetch all comments
-      description: return comments from server
-      operationId: fetchComments
-      responses:
-        default:
-          description: Default error sample response
-    post:
-      summary: new comment
-      description: store new comment on server
-      operationId: storeComment
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                body:
-                  type: string
-                  example: my new post
-                postId:
-                  type: integer
-                  example: 5
-      responses:
-        2XX:
-          description: 200 range response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    example: 55
-                  body:
-                    type: string
-                    example: my new comment
-                  postId:
-                    type: integer
-                    example: 5
-  /reviews:
-    summary: fetch reviews and other operations
-    description: reviews from data source
-    get:
-      summary: fetch all reviews
-      description: return reviews from server
-      operationId: fetchReviews
-      responses:
-        default:
-          description: Default error sample response
-    post:
-      summary: new review
-      description: store new review on server
-      operationId: storeReview
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                text:
-                  type: string
-                  example: my new review
-                postId:
-                  type: integer
-                  example: 5
-      responses:
-        2XX:
-          description: 200 range response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    example: 55
-                  text:
-                    type: string
-                    example: my new review
-                  postId:
-                    type: integer
-                    example: 5
-  /posts/{postId}:
-    summary: operations on individual post
-    description: get, delete and update a post
-    parameters:
-      - $ref: '#/components/parameters/PostId'
-    get:
-      summary: fetch post
-      description: get one post from server
-      operationId: fetchPost
-      responses:
-        '2XX':
-          description: success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/responses/PostResp'
-        default:
-          description: Default error sample response
-components:
-  parameters:
-    PostId:
-      in: path
-      required: true
-      name: postId
-      schema:
-        type: integer
-        minimum: 0
-        example: 5
-  schemas:
-    PostBody:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 55
-        title:
-          type: string
-          example: my new post
-        author:
-          type: string
-          example: bear
-    NewPostBody:
-      type: object
-      properties:
-        title:
-          type: string
-          example: my new post
-        author:
-          type: string
-          example: bear
-  responses:
-    PostResp:
-      description: post response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PostBody'
-  requestBodies:
-    PostReq:
-      description: post a body for a post
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewPostBody'
-
-  
-  
- 
+              examples:
+                sample posts:
+                  value: |-
+                    [
+                        {
+                          "id": 1,
+                          "title": "Post 1"
+                        },
+                        {
+                          "id": 2,
+                          "title": "Post 2"
+                        },
+                        {
+                          "id": 3,
+                          "title": "Post 3"
+                        }
+                      ]
+tags:
+  - name: posts
+    description: operations on posts
+  - name: comments
+    description: operations on comments
+    externalDocs:
+      url: http://www.example.com/comments
+      description: read more
+  - name: rates
+    description: operations on rates
+    externalDocs:
+      url: http://www.example.com/rates
+      description: read more
