@@ -1,65 +1,44 @@
 openapi: 3.0.1
 info:
-  title: My API
+  title: My API SEB
   version: '1.0'
-  description: some api to user for data
-  termsOfService: http://www.example.com
+  description: deals with data from server
+  termsOfService: https://www.example.com
   contact:
-    email: bear@example.com
+    email: b@bw1.us
     name: Bear
-    url: http://www.example.com
+    url: https://www.example.com
   license:
-    name: My License
-    url: http://www.example.com/license
+    name: SEB License
+    url: https://www.example.com/lic
 servers:
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
-    description: development
-  - url: http://localhost:3000
-    variables: {}
-    description: my api server
+    description: Blog posts server
 paths:
   /posts:
-    summary: top level posts operations
-    description: endpoint for fetching posts and adding new posts
     get:
-      tags:
-        - posts
-      summary: fetch posts
-      description: returns all posts in data
-      operationId: fetchPosts
       responses:
         default:
           description: Default error sample response
           content:
             application/json:
               examples:
-                sample posts:
+                Sample of Posts:
                   value: |-
                     [
-                        {
-                          "id": 1,
-                          "title": "Post 1"
-                        },
-                        {
-                          "id": 2,
-                          "title": "Post 2"
-                        },
-                        {
-                          "id": 3,
-                          "title": "Post 3"
-                        }
-                      ]
-tags:
-  - name: posts
-    description: operations on posts
-  - name: comments
-    description: operations on comments
-    externalDocs:
-      url: http://www.example.com/comments
-      description: read more
-  - name: rates
-    description: operations on rates
-    externalDocs:
-      url: http://www.example.com/rates
-      description: read more
+                      {
+                        "id": 1,
+                        "title": "Post 1"
+                      },
+                      {
+                        "id": 2,
+                        "title": "Post 2"
+                      },
+                      {
+                        "id": 3,
+                        "title": "Post 3"
+                      }
+                    ]
+      tags:
+        - posts
