@@ -86,24 +86,27 @@ paths:
   /posts/{postId}:
     summary: post level operations
     description: read, update and delete a post
+    parameters:
+      - $ref: '#/components/parameters/PostId'
     get:
       summary: fetch one post
       description: return a post from the server
       operationId: fetchPost
-      parameters:
-        - name: postId
-          in: path
-          required: true
-          schema:
-            type: integer
-            minimum: 0
-            example: 2
       responses:
         default:
           description: Default error sample response
       tags:
         - posts
 components:
+  parameters:
+    PostId:
+      name: postId
+      in: path
+      required: true
+      schema:
+        type: integer
+        minimum: 0
+        example: 2
   schemas:
     PostBody:
       type: object
