@@ -36,20 +36,8 @@ paths:
       description: returns all posts from server
       operationId: fetchPosts
       parameters:
-        - name: offset
-          in: query
-          description: starting value for fetching posts
-          schema:
-            type: integer
-            minimum: 0
-            example: 20
-        - name: limit
-          in: query
-          description: number of values for fetching posts
-          schema:
-            type: integer
-            minimum: 1
-            example: 20
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
       responses:
         default:
           description: Default error sample response
@@ -107,6 +95,22 @@ components:
         type: integer
         minimum: 0
         example: 2
+    Offset:
+      name: offset
+      in: query
+      description: starting value for fetching posts
+      schema:
+        type: integer
+        minimum: 0
+        example: 20
+    Limit:
+      name: limit
+      in: query
+      description: number of values for fetching posts
+      schema:
+        type: integer
+        minimum: 1
+        example: 20
   schemas:
     PostBody:
       type: object
