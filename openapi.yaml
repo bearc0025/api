@@ -70,6 +70,28 @@ paths:
           description: Default error sample response
       tags:
         - posts
+    delete:
+      summary: deletes a post
+      description: removes post from server
+      operationId: deletePost
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - posts
+    patch:
+      summary: update post
+      description: store changes in server
+      operationId: updatePost
+      requestBody:
+        $ref: '#/components/requestBodies/PostReq'
+      responses:
+        2XX:
+          $ref: '#/components/responses/PostResp'
+        default:
+          description: Default error sample response
+      tags:
+        - posts
 components:
   parameters:
     PostId:
