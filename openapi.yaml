@@ -48,25 +48,10 @@ paths:
       description: stores new post in database
       operationId: storePost
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                  example: my post
-                author:
-                  type: string
-                  example: bear
+        $ref: '#/components/requestBodies/PostReq'
       responses:
         2XX:
-          description: any 200 range response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PostBody'
+          $ref: '#/components/responses/PostResp'
         default:
           description: Default error sample response
       tags:
@@ -111,7 +96,31 @@ components:
         type: integer
         minimum: 1
         example: 20
+  requestBodies:
+    PostReq:
+      description: post request body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewPostBody'
+  responses:
+    PostResp:
+      description: returned posts from server
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PostBody'
   schemas:
+    NewPostBody:
+      type: object
+      properties:
+        title:
+          type: string
+          example: my post
+        author:
+          type: string
+          example: bear
     PostBody:
       type: object
       properties:
