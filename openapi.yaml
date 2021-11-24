@@ -1,44 +1,105 @@
 openapi: 3.0.1
 info:
-  title: My API SEB
+  title: My API
   version: '1.0'
-  description: deals with data from server
-  termsOfService: https://www.example.com
+  description: an api for data from server
+  termsOfService: http://www.example.com/service
   contact:
     email: b@bw1.us
     name: Bear
-    url: https://www.example.com
+    url: http://www.example.com/
   license:
-    name: SEB License
-    url: https://www.example.com/lic
+    name: License
+    url: http://www.example.com/license
 servers:
-  - url: https://my-json-server.typicode.com/bearc0025/api
+  - url: http://localhost:{port}
+    variables:
+      port:
+        default: '3000'
+        enum:
+          - '3000'
+          - '3001'
+        description: ''
+    description: local server
+  - url: https://my-json-server.typicode.com/typicode/demo/
     variables: {}
-    description: Blog posts server
+    description: demo server
+  - url: https://my-json-server.typicode.com/bearc0025/api/
+    variables: {}
+    description: My Git demo server
 paths:
   /posts:
+    summary: fetch and add posts
+    description: returns posts when fetched or stores on server
     get:
+      summary: fetch all posts
+      description: returns all posts from server
+      operationId: fetchPosts
       responses:
         default:
           description: Default error sample response
-          content:
-            application/json:
-              examples:
-                Sample of Posts:
-                  value: |-
-                    [
-                      {
-                        "id": 1,
-                        "title": "Post 1"
-                      },
-                      {
-                        "id": 2,
-                        "title": "Post 2"
-                      },
-                      {
-                        "id": 3,
-                        "title": "Post 3"
-                      }
-                    ]
       tags:
         - posts
+    post:
+      summary: add new post to server
+      description: stores new post in database
+      operationId: storePost
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: my post
+                author:
+                  type: string
+                  example: bear
+      responses:
+        2XX:
+          description: any 200 range response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostBody'
+        default:
+          description: Default error sample response
+      tags:
+        - posts
+  /posts/{postId}:
+    summary: post level operations
+    description: read, update and delete a post
+    get:
+      summary: fetch one post
+      description: return a post from the server
+      operationId: fetchPost
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+            example: 2
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - posts
+components:
+  schemas:
+    PostBody:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+          minimum: 0
+        title:
+          type: string
+          example: my post
+        author:
+          type: string
+          example: bear
