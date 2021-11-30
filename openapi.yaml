@@ -1,158 +1,20 @@
 openapi: 3.0.1
 info:
-  title: My API
+  title: Cohort 6 API
   version: '1.0'
-  description: an api for data from server
-  termsOfService: http://www.example.com/service
+  description: My api that does stuff with data
+  termsOfService: http://www.example.com/tos
   contact:
-    email: b@bw1.us
-    name: Bear
-    url: http://www.example.com/
+    email: bear@brainwashinc.com
+    name: Bear Cahill
+    url: http://www.example.com/contact
   license:
     name: License
     url: http://www.example.com/license
 servers:
-  - url: http://localhost:{port}
-    variables:
-      port:
-        default: '3000'
-        enum:
-          - '3000'
-          - '3001'
-        description: ''
-    description: local server
-  - url: https://my-json-server.typicode.com/typicode/demo/
+  - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
-    description: demo server
-  - url: https://my-json-server.typicode.com/bearc0025/api/
+    description: my github account json
+  - url: https://my-json-server.typicode.com/typicode/demo
     variables: {}
-    description: My Git demo server
-paths:
-  /posts:
-    summary: fetch and add posts
-    description: returns posts when fetched or stores on server
-    get:
-      summary: fetch all posts
-      description: returns all posts from server
-      operationId: fetchPosts
-      parameters:
-        - $ref: '#/components/parameters/Offset'
-        - $ref: '#/components/parameters/Limit'
-      responses:
-        default:
-          description: Default error sample response
-      tags:
-        - posts
-    post:
-      summary: add new post to server
-      description: stores new post in database
-      operationId: storePost
-      requestBody:
-        $ref: '#/components/requestBodies/PostReq'
-      responses:
-        2XX:
-          $ref: '#/components/responses/PostResp'
-        default:
-          description: Default error sample response
-      tags:
-        - posts
-  /posts/{postId}:
-    summary: post level operations
-    description: read, update and delete a post
-    parameters:
-      - $ref: '#/components/parameters/PostId'
-    get:
-      summary: fetch one post
-      description: return a post from the server
-      operationId: fetchPost
-      responses:
-        default:
-          description: Default error sample response
-      tags:
-        - posts
-    delete:
-      summary: deletes a post
-      description: removes post from server
-      operationId: deletePost
-      responses:
-        default:
-          description: Default error sample response
-      tags:
-        - posts
-    patch:
-      summary: update post
-      description: store changes in server
-      operationId: updatePost
-      requestBody:
-        $ref: '#/components/requestBodies/PostReq'
-      responses:
-        2XX:
-          $ref: '#/components/responses/PostResp'
-        default:
-          description: Default error sample response
-      tags:
-        - posts
-components:
-  parameters:
-    PostId:
-      name: postId
-      in: path
-      required: true
-      schema:
-        type: integer
-        minimum: 0
-        example: 2
-    Offset:
-      name: offset
-      in: query
-      description: starting value for fetching posts
-      schema:
-        type: integer
-        minimum: 0
-        example: 20
-    Limit:
-      name: limit
-      in: query
-      description: number of values for fetching posts
-      schema:
-        type: integer
-        minimum: 1
-        example: 20
-  requestBodies:
-    PostReq:
-      description: post request body
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewPostBody'
-  responses:
-    PostResp:
-      description: returned posts from server
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PostBody'
-  schemas:
-    NewPostBody:
-      type: object
-      properties:
-        title:
-          type: string
-          example: my post
-        author:
-          type: string
-          example: bear
-    PostBody:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 5
-          minimum: 0
-        title:
-          type: string
-          example: my post
-        author:
-          type: string
-          example: bear
+    description: github demo api server
