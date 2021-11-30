@@ -18,3 +18,35 @@ servers:
   - url: https://my-json-server.typicode.com/typicode/demo
     variables: {}
     description: github demo api server
+paths:
+  /posts:
+    summary: posts level operations
+    description: create new post, fetch all posts
+    get:
+      summary: fetch all posts
+      description: returns all posts from server
+      operationId: fetchPosts
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                sample:
+                  value: |
+                    [
+                      {
+                        "id": 1,
+                        "title": "Post 1"
+                      },
+                      {
+                        "id": 2,
+                        "title": "Post 2"
+                      },
+                      {
+                        "id": 3,
+                        "title": "Post 3"
+                      }
+                    ]
+      tags:
+        - posts
