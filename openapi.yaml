@@ -12,9 +12,16 @@ info:
     name: License
     url: http://www.example.com/license
 servers:
-  - url: http://localhost:3000/
-    variables: {}
-    description: my local server
+  - url: http://localhost:{port}
+    variables:
+      port:
+        default: '3000'
+        enum:
+          - '3000'
+          - '3001'
+          - '3002'
+        description: server port with variation
+    description: local json server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: my github account json
@@ -58,12 +65,12 @@ paths:
               properties:
                 author:
                   type: string
-                  example: "bear"
+                  example: bear
                 title:
                   type: string
-                  example: "my post"
+                  example: my post
       responses:
-        '2XX':
+        2XX:
           description: successful request
           content:
             application/json:
@@ -83,8 +90,7 @@ components:
           example: 4
         author:
           type: string
-          example: "bear"
+          example: bear
         title:
           type: string
-          example: "my post"
-    
+          example: my post
