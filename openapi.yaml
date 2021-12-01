@@ -68,18 +68,23 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    example: 4
-                  author:
-                    type: string
-                    example: "bear"
-                  title:
-                    type: string
-                    example: "my post"
+                $ref: '#/components/schemas/PostBody'
         default:
           description: Default error sample response
       tags:
         - posts
+components:
+  schemas:
+    PostBody:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 4
+        author:
+          type: string
+          example: "bear"
+        title:
+          type: string
+          example: "my post"
+    
