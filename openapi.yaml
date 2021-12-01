@@ -12,6 +12,9 @@ info:
     name: License
     url: http://www.example.com/license
 servers:
+  - url: http://localhost:3000/
+    variables: {}
+    description: my local server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: my github account json
@@ -33,20 +36,50 @@ paths:
             application/json:
               examples:
                 sample:
-                  value: |
-                    [
-                      {
-                        "id": 1,
-                        "title": "Post 1"
-                      },
-                      {
-                        "id": 2,
-                        "title": "Post 2"
-                      },
-                      {
-                        "id": 3,
-                        "title": "Post 3"
-                      }
-                    ]
+                  value:
+                    - id: 1
+                      title: Post 1
+                    - id: 2
+                      title: Post 2
+                    - id: 3
+                      title: Post 3
+      tags:
+        - posts
+    post:
+      summary: add new server item
+      description: store new post on server
+      operationId: storePost
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                author:
+                  type: string
+                  example: "bear"
+                title:
+                  type: string
+                  example: "my post"
+      responses:
+        '2XX':
+          description: successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 4
+                  author:
+                    type: string
+                    example: "bear"
+                  title:
+                    type: string
+                    example: "my post"
+        default:
+          description: Default error sample response
       tags:
         - posts
