@@ -80,6 +80,32 @@ paths:
           description: Default error sample response
       tags:
         - posts
+  /posts/{postId}:
+    summary: post level operations
+    description: fetch, delete, patch a single operation
+    get:
+      summary: fetch a post
+      description: returns a single post
+      operationId: fetchPost
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+            example: 2
+      responses:
+        2XX:
+          description: successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostBody'
+        default:
+          description: Default error sample response
+      tags:
+        - posts
 components:
   schemas:
     PostBody:
