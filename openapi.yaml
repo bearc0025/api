@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Cohort 6 API
-  version: '1.0'
+  version: '1.1'
   description: My api that does stuff with data
   termsOfService: http://www.example.com/tos
   contact:
@@ -36,6 +36,20 @@ paths:
       summary: fetch all posts
       description: returns all posts from server
       operationId: fetchPosts
+      parameters:
+        - name: sorted
+          in: query
+          description: asc/des sort
+          schema:
+            type: string
+            example: asc
+            enum: ['asc','des']
+        - name: search
+          in: query
+          description: search for this text
+          schema:
+            type: string
+            example: name
       responses:
         default:
           description: Default error sample response
@@ -57,18 +71,7 @@ paths:
       description: store new post on server
       operationId: storePost
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                author:
-                  type: string
-                  example: bear
-                title:
-                  type: string
-                  example: my post
+        $ref: '#/components/requestBodies/PostReq'
       responses:
         2XX:
           description: successful request
@@ -83,18 +86,12 @@ paths:
   /posts/{postId}:
     summary: post level operations
     description: fetch, delete, patch a single operation
+    parameters:
+      - $ref: '#/components/parameters/PostId'
     get:
       summary: fetch a post
       description: returns a single post
       operationId: fetchPost
-      parameters:
-        - name: postId
-          in: path
-          required: true
-          schema:
-            type: integer
-            minimum: 0
-            example: 2
       responses:
         2XX:
           description: successful request
@@ -107,7 +104,24 @@ paths:
       tags:
         - posts
 components:
+  requestBodies:
+    PostReq:
+      description: post sent to server
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewPostBody'
   schemas:
+    NewPostBody:
+      type: object
+      properties:
+        author:
+          type: string
+          example: bear
+        title:
+          type: string
+          example: my post
     PostBody:
       type: object
       properties:
@@ -120,3 +134,13 @@ components:
         title:
           type: string
           example: my post
+  parameters:
+    PostId:
+      name: postId
+      in: path
+      required: true
+      schema:
+        type: integer
+        minimum: 0
+        example: 2
+    
