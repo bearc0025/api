@@ -43,7 +43,9 @@ paths:
           schema:
             type: string
             example: asc
-            enum: ['asc','des']
+            enum:
+              - asc
+              - des
         - name: search
           in: query
           description: search for this text
@@ -95,6 +97,15 @@ paths:
           description: Default error sample response
       tags:
         - posts
+    delete:
+      summary: delete a post
+      description: remove from server
+      operationId: deletePost
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - posts
 components:
   requestBodies:
     PostReq:
@@ -138,4 +149,3 @@ components:
         type: integer
         minimum: 0
         example: 2
-    
