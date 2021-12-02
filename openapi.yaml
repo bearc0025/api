@@ -74,11 +74,7 @@ paths:
         $ref: '#/components/requestBodies/PostReq'
       responses:
         2XX:
-          description: successful request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PostBody'
+          $ref: '#/components/responses/PostResp'
         default:
           description: Default error sample response
       tags:
@@ -94,11 +90,7 @@ paths:
       operationId: fetchPost
       responses:
         2XX:
-          description: successful request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PostBody'
+          $ref: '#/components/responses/PostResp'
         default:
           description: Default error sample response
       tags:
@@ -112,6 +104,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/NewPostBody'
+  responses:
+    PostResp:
+      description: successful request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PostBody'
   schemas:
     NewPostBody:
       type: object
@@ -123,17 +122,13 @@ components:
           type: string
           example: my post
     PostBody:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 4
-        author:
-          type: string
-          example: bear
-        title:
-          type: string
-          example: my post
+      allOf:
+        - $ref: '#/components/schemas/NewPostBody'
+        - type: object
+          properties:
+            id:
+              type: integer
+              example: 4
   parameters:
     PostId:
       name: postId
