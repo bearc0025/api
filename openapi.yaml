@@ -12,6 +12,22 @@ info:
     name: My License
     url: https://www.example.com/lic
 servers:
+  - url: https://my-json-server.typicode.com/bearc0025/api
+    variables: {}
+    description: git repo
   - url: https://my-json-server.typicode.com/typicode/demo
     variables: {}
     description: my demo server
+paths:
+  /posts:
+    summary: fetch posts from server
+    description: fetch all posts
+    get:
+      summary: fetch posts
+      description: fetch posts from server
+      operationId: fetchPosts
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - posts
