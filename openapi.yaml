@@ -1,151 +1,17 @@
 openapi: 3.0.1
 info:
-  title: Cohort 6 API
-  version: '1.1'
-  description: My api that does stuff with data
-  termsOfService: http://www.example.com/tos
+  title: MyAPISEBPM1
+  version: '1.0'
+  description: my api for data using...
+  termsOfService: https://www.example.com/tos
   contact:
-    email: bear@brainwashinc.com
-    name: Bear Cahill
-    url: http://www.example.com/contact
+    email: test@email.com
+    name: Support Team
+    url: https://www.example.com/support
   license:
-    name: License
-    url: http://www.example.com/license
+    name: My License
+    url: https://www.example.com/lic
 servers:
-  - url: http://localhost:{port}
-    variables:
-      port:
-        default: '3000'
-        enum:
-          - '3000'
-          - '3001'
-          - '3002'
-        description: server port with variation
-    description: local json server
-  - url: https://my-json-server.typicode.com/bearc0025/api
-    variables: {}
-    description: my github account json
   - url: https://my-json-server.typicode.com/typicode/demo
     variables: {}
-    description: github demo api server
-paths:
-  /posts:
-    summary: posts level operations
-    description: create new post, fetch all posts
-    get:
-      summary: fetch all posts
-      description: returns all posts from server
-      operationId: fetchPosts
-      parameters:
-        - name: sorted
-          in: query
-          description: asc/des sort
-          schema:
-            type: string
-            example: asc
-            enum:
-              - asc
-              - des
-        - name: search
-          in: query
-          description: search for this text
-          schema:
-            type: string
-            example: name
-      responses:
-        default:
-          description: Default error sample response
-          content:
-            application/json:
-              examples:
-                sample:
-                  value:
-                    - id: 1
-                      title: Post 1
-                    - id: 2
-                      title: Post 2
-                    - id: 3
-                      title: Post 3
-      tags:
-        - posts
-    post:
-      summary: add new server item
-      description: store new post on server
-      operationId: storePost
-      requestBody:
-        $ref: '#/components/requestBodies/PostReq'
-      responses:
-        2XX:
-          $ref: '#/components/responses/PostResp'
-        default:
-          description: Default error sample response
-      tags:
-        - posts
-  /posts/{postId}:
-    summary: post level operations
-    description: fetch, delete, patch a single operation
-    parameters:
-      - $ref: '#/components/parameters/PostId'
-    get:
-      summary: fetch a post
-      description: returns a single post
-      operationId: fetchPost
-      responses:
-        2XX:
-          $ref: '#/components/responses/PostResp'
-        default:
-          description: Default error sample response
-      tags:
-        - posts
-    delete:
-      summary: delete a post
-      description: remove from server
-      operationId: deletePost
-      responses:
-        default:
-          description: Default error sample response
-      tags:
-        - posts
-components:
-  requestBodies:
-    PostReq:
-      description: post sent to server
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewPostBody'
-  responses:
-    PostResp:
-      description: successful request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PostBody'
-  schemas:
-    NewPostBody:
-      type: object
-      properties:
-        author:
-          type: string
-          example: bear
-        title:
-          type: string
-          example: my post
-    PostBody:
-      allOf:
-        - $ref: '#/components/schemas/NewPostBody'
-        - type: object
-          properties:
-            id:
-              type: integer
-              example: 4
-  parameters:
-    PostId:
-      name: postId
-      in: path
-      required: true
-      schema:
-        type: integer
-        minimum: 0
-        example: 2
+    description: my demo server
