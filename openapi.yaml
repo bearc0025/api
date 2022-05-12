@@ -48,11 +48,7 @@ paths:
       description: store post on server
       operationId: createPost
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PostBody'
+        $ref: '#/components/requestBodies/PostReq'
       responses:
         2XX:
           description: successful post
@@ -89,26 +85,46 @@ paths:
   /posts/{postId}:
     summary: operations on a specific post
     description: get, patch, delete operations
+    parameters:
+      - name: postId
+        in: path
+        required: true
+        schema:
+          type: integer
+          minimum: 0
+          example: 1
     get:
       summary: fetch one post
       description: get one post from the server
       operationId: fetchPost
-      parameters:
-        - name: postId
-          in: path
-          required: true
-          schema:
-            type: integer
-            minimum: 0
-            example: 1
       responses:
         default:
           description: Default error sample response
       tags:
         - post
 components:
+  requestBodies:
+    PostReq:
+      description: sending new post to server
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewPostBody'
   schemas:
     PostBody:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: new post
+        author:
+          type: string
+          example: bear
+    NewPostBody:
       type: object
       properties:
         title:
