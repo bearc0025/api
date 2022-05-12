@@ -21,6 +21,15 @@ servers:
   - url: https://my-json-server.typicode.com/typicode/demo
     variables: {}
     description: my demo server
+  - url: http://api.example/{version}
+    variables:
+      version:
+        default: v1
+        enum:
+          - v1
+          - v2
+        description: version of server
+    description: my api
 paths:
   /posts:
     summary: posts on the server
@@ -43,31 +52,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                title: 
-                  type: string
-                  example: my new post
-                author:
-                  type: string
-                  example: bear
+              $ref: '#/components/schemas/NewPostBody'
       responses:
-        '2XX':
+        2XX:
           description: new post successful
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    example: 45
-                  title: 
-                    type: string
-                    example: my new post
-                  author:
-                    type: string
-                    example: bear
+                $ref: '#/components/schemas/PostBody'
         default:
           description: Default error sample response
       tags:
@@ -84,3 +76,52 @@ paths:
           description: Default sample response
       tags:
         - comments
+  /posts/{postId}:
+    summary: post level operations
+    description: fetch, update, delete a post
+    get:
+      summary: fetch one post
+      description: fetch a post from the server
+      operationId: fetchPost
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+            minimum: 0
+      responses:
+        2XX:
+          description: new post successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostBody'
+        default:
+          description: Default error sample response
+      tags:
+        - post
+components:
+  schemas:
+    NewPostBody:
+      type: object
+      properties:
+        title:
+          type: string
+          example: my new post
+        author:
+          type: string
+          example: bear
+    PostBody:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 45
+        title:
+          type: string
+          example: my new post
+        author:
+          type: string
+          example: bear
