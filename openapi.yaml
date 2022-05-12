@@ -12,7 +12,7 @@ info:
     name: My License
     url: https://www.example.com/lic
 servers:
-  - url: http://localhost:3000
+  - url: http://localhost:3000/
     variables: {}
     description: my local server
   - url: https://my-json-server.typicode.com/bearc0025/api
@@ -21,15 +21,6 @@ servers:
   - url: https://my-json-server.typicode.com/typicode/demo
     variables: {}
     description: my demo server
-  - url: https://api.example.com/{vers}
-    variables:
-      vers:
-        default: v1
-        enum:
-          - v1
-          - v2
-        description: version of api
-    description: server variable
 paths:
   /posts:
     summary: posts on the server
@@ -45,31 +36,42 @@ paths:
         - posts
     post:
       summary: create new post
-      description: store post on server
+      description: store new post on the server
       operationId: createPost
       requestBody:
-        $ref: '#/components/requestBodies/PostReq'
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title: 
+                  type: string
+                  example: my new post
+                author:
+                  type: string
+                  example: bear
       responses:
-        2XX:
-          description: successful post
+        '2XX':
+          description: new post successful
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  title:
+                  id:
+                    type: integer
+                    example: 45
+                  title: 
                     type: string
-                    example: new post
+                    example: my new post
                   author:
                     type: string
                     example: bear
-                  id:
-                    type: integer
-                    example: 12
         default:
           description: Default error sample response
       tags:
-        - posts
+        - post
   /comments:
     summary: comments on the server
     description: resource for comments at the parent level
@@ -82,54 +84,3 @@ paths:
           description: Default sample response
       tags:
         - comments
-  /posts/{postId}:
-    summary: operations on a specific post
-    description: get, patch, delete operations
-    parameters:
-      - name: postId
-        in: path
-        required: true
-        schema:
-          type: integer
-          minimum: 0
-          example: 1
-    get:
-      summary: fetch one post
-      description: get one post from the server
-      operationId: fetchPost
-      responses:
-        default:
-          description: Default error sample response
-      tags:
-        - post
-components:
-  requestBodies:
-    PostReq:
-      description: sending new post to server
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewPostBody'
-  schemas:
-    PostBody:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        title:
-          type: string
-          example: new post
-        author:
-          type: string
-          example: bear
-    NewPostBody:
-      type: object
-      properties:
-        title:
-          type: string
-          example: new post
-        author:
-          type: string
-          example: bear
