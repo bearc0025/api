@@ -48,18 +48,10 @@ paths:
       description: store new post on the server
       operationId: createPost
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/NewPostBody'
+        $ref: '#/components/requestBodies/PostReq'
       responses:
         2XX:
-          description: new post successful
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PostBody'
+          $ref: '#/components/responses/PostResp'
         default:
           description: Default error sample response
       tags:
@@ -79,30 +71,44 @@ paths:
   /posts/{postId}:
     summary: post level operations
     description: fetch, update, delete a post
+    parameters:
+      - $ref: '#/components/parameters/PostId'
     get:
       summary: fetch one post
       description: fetch a post from the server
       operationId: fetchPost
-      parameters:
-        - name: postId
-          in: path
-          required: true
-          schema:
-            type: integer
-            example: 1
-            minimum: 0
       responses:
         2XX:
-          description: new post successful
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PostBody'
+          $ref: '#/components/responses/PostResp'
         default:
           description: Default error sample response
       tags:
         - post
 components:
+  requestBodies:
+    PostReq:
+      description: post body sent to server
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewPostBody'
+  responses:
+    PostResp:
+      description: post body sent from server
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PostBody'
+  parameters:
+    PostId:
+      name: postId
+      in: path
+      required: true
+      schema:
+        type: integer
+        example: 1
+        minimum: 0
   schemas:
     NewPostBody:
       type: object
