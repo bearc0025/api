@@ -1,133 +1,98 @@
 openapi: 3.0.1
 info:
-  title: MyAPISEBPM1
+  title: My API
   version: '1.0'
-  description: my api for data using...
+  description: my api for users and game scores
   termsOfService: https://www.example.com/tos
   contact:
-    email: test@email.com
+    email: support@example.com
     name: Support Team
     url: https://www.example.com/support
   license:
-    name: My License
-    url: https://www.example.com/lic
+    name: User License
+    url: https://www.example.com/license
 servers:
-  - url: http://localhost:3000/
+  - url: http://localhost:3000
     variables: {}
-    description: my local server
+    description: My fake local server for git repo
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
-    description: my fake server
-  - url: https://my-json-server.typicode.com/typicode/demo
+    description: My fake server for git repo
+  - url: https://my-json-server.typicode.com/lchesnutt/api
     variables: {}
-    description: my demo server
-  - url: http://api.example/{version}
-    variables:
-      version:
-        default: v1
-        enum:
-          - v1
-          - v2
-        description: version of server
-    description: my api
+    description: My fake server for git repo
 paths:
-  /posts:
-    summary: posts on the server
-    description: resource for posts at the parent level
+  /users:
+    summary: user base level opertations
+    description: fetch all users, add new user...
     get:
-      summary: fetch all posts
-      description: return posts from server
-      operationId: fetchPosts
+      summary: fetch all users
+      description: return users from server
+      operationId: fetchUsers
       responses:
+        2XX:
+          description: successful fetch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUser'
         default:
-          description: Default sample response
+          description: Default error sample response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
       tags:
-        - posts
+        - users
     post:
-      summary: create new post
-      description: store new post on the server
-      operationId: createPost
+      summary: create a new user
+      description: store user on server
+      operationId: createUser
       requestBody:
-        $ref: '#/components/requestBodies/PostReq'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostNewUser'
       responses:
-        2XX:
-          $ref: '#/components/responses/PostResp'
+        201:
+          description: successful create
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUser'
         default:
           description: Default error sample response
       tags:
-        - post
-  /comments:
-    summary: comments on the server
-    description: resource for comments at the parent level
-    get:
-      summary: fetch all comments
-      description: return comments from server
-      operationId: fetchComments
-      responses:
-        default:
-          description: Default sample response
-      tags:
-        - comments
-  /posts/{postId}:
-    summary: post level operations
-    description: fetch, update, delete a post
-    parameters:
-      - $ref: '#/components/parameters/PostId'
-    get:
-      summary: fetch one post
-      description: fetch a post from the server
-      operationId: fetchPost
-      responses:
-        2XX:
-          $ref: '#/components/responses/PostResp'
-        default:
-          description: Default error sample response
-      tags:
-        - post
+        - users
 components:
-  requestBodies:
-    PostReq:
-      description: post body sent to server
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewPostBody'
-  responses:
-    PostResp:
-      description: post body sent from server
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PostBody'
-  parameters:
-    PostId:
-      name: postId
-      in: path
-      required: true
-      schema:
-        type: integer
-        example: 1
-        minimum: 0
   schemas:
-    NewPostBody:
+    PostNewUser:
       type: object
       properties:
-        title:
+        username:
           type: string
-          example: my new post
-        author:
-          type: string
-          example: bear
-    PostBody:
-      type: object
-      properties:
-        id:
+          example: bear2
+        score:
           type: integer
-          example: 45
-        title:
+          example: 670
+        active:
+          type: boolean
+          example: true
+    FullUser:
+      allOf:
+        - $ref: '#/components/schemas/PostNewUser'
+        - type: object
+          properties:
+            id:
+              type: string
+              example: 1234abc7
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
           type: string
-          example: my new post
-        author:
-          type: string
-          example: bear
+          example: we cound't find...
