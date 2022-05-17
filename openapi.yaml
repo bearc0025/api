@@ -12,9 +12,21 @@ info:
     name: User License
     url: https://www.example.com/license
 servers:
-  - url: http://localhost:3000
-    variables: {}
-    description: My fake local server for git repo
+  - url: '{scheme}://localhost:{port}'
+    variables:
+      scheme:
+        default: http
+        enum:
+          - http
+          - https
+        description: http v https for security
+      port:
+        default: '3000'
+        enum:
+          - '3000'
+          - '3001'
+        description: debug v production port
+    description: local server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: My fake server for git repo
@@ -30,7 +42,7 @@ paths:
       description: return users from server
       operationId: fetchUsers
       responses:
-        '2XX':
+        2XX:
           $ref: '#/components/responses/UserArrayResponseBody'
         default:
           description: Default error sample response
