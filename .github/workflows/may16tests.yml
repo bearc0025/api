@@ -23,7 +23,7 @@ jobs:
       - uses: kong/setup-inso@v1
         with:
           inso-version: 2.4.0
-#       - name: Lint
-#         run: inso lint spec uts_53ce54 --ci
+      - name: Lint
+        run: inso lint spec "May 16" --ci
       - name: Run test suites
-        run: inso run test uts_53ce54 --env env_env_afe085 --ci
+        run: inso run test "May 16" --env env_env_afe085 --ci
