@@ -30,7 +30,7 @@ paths:
       description: return users from server
       operationId: fetchUsers
       responses:
-        2XX:
+        '2XX':
           $ref: '#/components/responses/UserArrayResponseBody'
         default:
           description: Default error sample response
@@ -47,7 +47,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/UserPostBody'
       responses:
-        201:
+        '201':
           $ref: '#/components/responses/UserRespBody'
         default:
           description: Default error sample response
@@ -108,4 +108,4 @@ components:
           example: false
         message:
           type: string
-          example: we cound't find...
+          example: we couldn't find...
