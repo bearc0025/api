@@ -81,6 +81,17 @@ paths:
           description: Default error sample response
       tags:
         - users
+    delete:
+      summary: delete one user
+      description: delete a user by user id from the server
+      operationId: deleteUser
+      responses:
+        '2XX':
+          $ref: '#/components/responses/UserDeleteBody'
+        default:
+          description: Default error sample response
+      tags:
+        - users
 components:
   parameters:
     UserId:
@@ -104,6 +115,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/FullUser'
+    UserDeleteBody:
+      description: deleted User
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EmptyUser'
   requestBodies:
     UserPostBody:
       description: body of new user
@@ -117,6 +134,8 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/FullUser'
+    EmptyUser:
+      type: object
     PostNewUser:
       type: object
       properties:
