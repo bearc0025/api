@@ -1,0 +1,14 @@
+_id: env_env_afe085fe82c61e703fcc1bfa6c3a4bfba61834c5_sub
+type: Environment
+parentId: env_afe085fe82c61e703fcc1bfa6c3a4bfba61834c5
+modified: 1652730416878
+created: 1652730416878
+name: OpenAPI env
+data:
+  scheme: https
+  base_path: /bearc0025/api
+  host: my-json-server.typicode.com
+dataPropertyOrder: null
+color: null
+isPrivate: false
+metaSortKey: 1652730416878
