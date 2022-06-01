@@ -1,31 +1,90 @@
-{
-	"users": [{
-		"id": "1234abc",
-		"username": "bear",
-		"score": 55,
-		"active": true
-	}, {
-		"id": "xyz123",
-		"username": "schmeb",
-		"score": 550,
-		"active": false
-	}, {
-		"id": "qwerty",
-		"username": "jed",
-		"score": 553,
-		"active": true
-	}],
-	"attempts": [{
-		"id": "a1",
-		"score": 5,
-		"userId": "qwerty"
-	}, {
-		"id": "bb2",
-		"score": 3,
-		"userId": "xyz123"
-	}, {
-		"id": "999",
-		"score": 8,
-		"userId": "qwerty"
-	}]
-}
+openapi: 3.0.1
+info:
+  title: SEB 1
+  version: '1.0'
+  description: my api for fetching and storing data
+  termsOfService: https://www.example.com/tos
+  contact:
+    email: support@example.com
+    name: Support
+    url: https://www.example.com/contact
+  license:
+    name: License
+    url: https://www.example.com/license
+servers:
+  - url: http://localhost:3000
+    variables: {}
+    description: local server
+  - url: https://my-json-server.typicode.com/bearc0025/api
+    variables: {}
+    description: my fake server at github
+paths:
+  /users:
+    summary: base level for users
+    description: fetch all users, create new users
+    get:
+      summary: fetch all users
+      description: returns all users from server
+      operationId: fetchUsers
+      responses:
+        2XX:
+          description: successful fetch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUser'
+        default:
+          description: Default error sample response
+      tags:
+        - users
+    post:
+      summary: create a new user
+      description: store a user on the server
+      operationId: createUser
+      requestBody:
+        description: body of new user
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUser'
+      responses:
+        201:
+          description: successful create
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUser'
+        default:
+          description: Default error sample response
+      tags:
+        - users
+components:
+  schemas:
+    NewUser:
+      type: object
+      properties:
+        username:
+          type: string
+          example: bearuser
+        score:
+          type: integer
+          example: 56
+        active:
+          type: boolean
+          example: true
+    FullUser:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1234abc
+        username:
+          type: string
+          example: bearuser
+        score:
+          type: integer
+          example: 56
+        active:
+          type: boolean
+          example: true
