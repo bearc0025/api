@@ -12,15 +12,9 @@ info:
     name: License
     url: https://www.example.com/license
 servers:
-  - url: http://localhost:3000
-    variables: {}
-    description: my local fake server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: my fake server at github
-  - url: https://my-json-server.typicode.com/nispr0/api
-    variables: {}
-    description: another test server
 paths:
   /users:
     summary: base level for users
@@ -30,63 +24,26 @@ paths:
       description: returns all users from server
       operationId: fetchUsers
       responses:
-        2XX:
+        '2XX':
           description: successful fetch
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FullUser'
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 1234abc
+                  username:
+                    type: string
+                    example: bearuser
+                  score:
+                    type: integer
+                    example: 56
+                  active:
+                    type: boolean
+                    example: true
         default:
           description: Default error sample response
       tags:
         - users
-    post:
-      summary: create a new user
-      description: store user on server
-      operationId: createUser
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PostNewUser'
-      responses:
-        201:
-          description: successful fetch
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FullUser'
-        default:
-          description: Default error sample response
-      tags:
-        - users
-components:
-  schemas:
-    FullUser:
-      type: object
-      properties:
-        id:
-          type: string
-          example: qwerty
-        username:
-          type: string
-          example: bear
-        score:
-          type: integer
-          example: 55
-        active:
-          type: boolean
-          example: true
-    PostNewUser:
-      type: object
-      properties:
-        username:
-          type: string
-          example: bear
-        score:
-          type: integer
-          example: 55
-        active:
-          type: boolean
-          example: true
