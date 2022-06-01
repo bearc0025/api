@@ -12,6 +12,9 @@ info:
     name: License
     url: https://www.example.com/license
 servers:
+  - url: http://localhost:3000
+    variables: {}
+    description: local server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: my fake server at github
@@ -24,26 +27,64 @@ paths:
       description: returns all users from server
       operationId: fetchUsers
       responses:
-        '2XX':
+        2XX:
           description: successful fetch
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    example: 1234abc
-                  username:
-                    type: string
-                    example: bearuser
-                  score:
-                    type: integer
-                    example: 56
-                  active:
-                    type: boolean
-                    example: true
+                $ref: '#/components/schemas/FullUser'
         default:
           description: Default error sample response
       tags:
         - users
+    post:
+      summary: create a new user
+      description: store a user on the server
+      operationId: createUser
+      requestBody:
+        description: body of new user
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUser'
+      responses:
+        201:
+          description: successful create
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUser'
+        default:
+          description: Default error sample response
+      tags:
+        - users
+components:
+  schemas:
+    NewUser:
+      type: object
+      properties:
+        username:
+          type: string
+          example: bearuser
+        score:
+          type: integer
+          example: 56
+        active:
+          type: boolean
+          example: true
+    FullUser:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1234abc
+        username:
+          type: string
+          example: bearuser
+        score:
+          type: integer
+          example: 56
+        active:
+          type: boolean
+          example: true
