@@ -23,24 +23,45 @@ paths:
       description: return all users from the server
       operationId: fetchUsers
       responses:
-        '2XX':
-          description: successful fetch
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FullUser'
+        2XX:
+          $ref: '#/components/responses/UserRespBody'
+        default:
+          description: Default error sample response
+      tags:
+        - Users
+    post:
+      summary: create a new user
+      description: store user on server
+      operationId: createUser
+      requestBody:
+        $ref: '#/components/requestBodies/UserPostBody'
+      responses:
+        201:
+          $ref: '#/components/responses/UserRespBody'
         default:
           description: Default error sample response
       tags:
         - Users
 components:
+  responses:
+    UserRespBody:
+      description: successful creation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FullUser'
+  requestBodies:
+    UserPostBody:
+      required: true
+      description: new user POST
+      content: 
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewPostBody'
   schemas:
-    FullUser:
+    NewPostBody:
       type: object
       properties:
-        id:
-          type: string
-          example: qwerty
         username:
           type: string
           example: bear
@@ -50,4 +71,11 @@ components:
         active:
           type: boolean
           example: true
-    
+    FullUser:
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: string
+              example: qwerty
+        - $ref: '#/components/schemas/NewPostBody'
