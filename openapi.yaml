@@ -1,95 +1,53 @@
 openapi: 3.0.1
 info:
-  title: SEB 1
+  title: My API
   version: '1.0'
-  description: my api for fetching and storing data
-  termsOfService: https://www.example.com/tos
+  description: some great api
   contact:
     email: support@example.com
     name: Support
     url: https://www.example.com/contact
-  license:
-    name: License
-    url: https://www.example.com/license
 servers:
   - url: http://localhost:3000
     variables: {}
-    description: local server
+    description: my fake local server api
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
-    description: my fake server at github
+    description: my fake github server api
 paths:
   /users:
-    summary: base level for users
-    description: fetch all users, create new users
+    summary: base user level operations
+    description: fetch (GET) all users, create (POST) a new user
     get:
       summary: fetch all users
-      description: returns all users from server
+      description: return all users from the server
       operationId: fetchUsers
       responses:
-        2XX:
-          $ref: '#/components/responses/UserArrayRespBody'
+        '2XX':
+          description: successful fetch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUser'
         default:
           description: Default error sample response
       tags:
-        - users
-    post:
-      summary: create a new user
-      description: store a user on the server
-      operationId: createUser
-      requestBody:
-        $ref: '#/components/requestBodies/UserPostBody'
-      responses:
-        201:
-          $ref: '#/components/responses/UserRespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - users
+        - Users
 components:
-  responses:
-    UserArrayRespBody:
-      description: multiple user objects
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserArray'
-    UserRespBody:
-      description: successful create
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/FullUser'
-  requestBodies:
-    UserPostBody:
-      description: body of new user
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewUser'
   schemas:
-    UserArray:
-      type: array
-      items:
-        $ref: '#/components/schemas/FullUser'
-    NewUser:
+    FullUser:
       type: object
       properties:
+        id:
+          type: string
+          example: qwerty
         username:
           type: string
-          example: bearuser
+          example: bear
         score:
           type: integer
-          example: 56
+          example: 99
         active:
           type: boolean
           example: true
-    FullUser:
-      allOf:
-        - type: object
-          properties:
-            id:
-              type: string
-              example: qwerty
-        - $ref: '#/components/schemas/NewUser'
+    
