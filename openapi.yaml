@@ -14,6 +14,29 @@ servers:
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: my fake github server api
+  - url: '{scheme}://www.example.com:{port}/{version}'
+    variables:
+      scheme:
+        default: https
+        enum:
+          - https
+          - http
+        description: ssl or not
+      port:
+        default: '8080'
+        enum:
+          - '8080'
+          - '8081'
+          - '8082'
+        description: port numbers for dev, test and production
+      version:
+        default: v3
+        enum:
+          - v3
+          - v2
+          - v1
+        description: version of api
+    description: example with variables
 paths:
   /users:
     summary: base user level operations
@@ -36,7 +59,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/UserPostBody'
       responses:
-        201:
+        '201':
           $ref: '#/components/responses/UserRespBody'
         default:
           description: Default error sample response
@@ -60,7 +83,7 @@ components:
     UserPostBody:
       required: true
       description: new user POST
-      content: 
+      content:
         application/json:
           schema:
             $ref: '#/components/schemas/NewPostBody'
