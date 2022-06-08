@@ -24,7 +24,7 @@ paths:
       operationId: fetchUsers
       responses:
         2XX:
-          $ref: '#/components/responses/UserRespBody'
+          $ref: '#/components/responses/UserArrayResponseBody'
         default:
           description: Default error sample response
       tags:
@@ -44,6 +44,12 @@ paths:
         - Users
 components:
   responses:
+    UserArrayResponseBody:
+      description: array of users
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserArray'
     UserRespBody:
       description: successful creation
       content:
@@ -59,6 +65,10 @@ components:
           schema:
             $ref: '#/components/schemas/NewPostBody'
   schemas:
+    UserArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/FullUser'
     NewPostBody:
       type: object
       properties:
