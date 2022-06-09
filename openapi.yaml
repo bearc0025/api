@@ -64,18 +64,34 @@ paths:
   /users/{userId}:
     summary: operations on individual users
     description: fetch, update, delete a user
+    parameters:
+      - $ref: '#/components/parameters/UserId'
     get:
       summary: fetch a single user
       description: return single user from server
       operationId: fetchUser
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          description: user id
-          schema:
-            type: string
-            example: qwerty
+      responses:
+        '200':
+          $ref: '#/components/responses/UserRespBody'
+        default:
+          description: Default error sample response
+      tags:
+        - Users
+    delete:
+      summary: delete a user
+      description: remove a user from the server
+      operationId: deleteUser
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Users
+    patch:
+      summary: update a user
+      description: store new user data
+      operationId: updateUser
+      requestBody:
+        $ref: '#/components/requestBodies/UserPostBody'
       responses:
         '200':
           $ref: '#/components/responses/UserRespBody'
@@ -84,6 +100,15 @@ paths:
       tags:
         - Users
 components:
+  parameters:
+    UserId:
+      name: userId
+      in: path
+      required: true
+      description: user id
+      schema:
+        type: string
+        example: qwerty
   responses:
     UserArrayResponseBody:
       description: array of Users
