@@ -62,11 +62,11 @@ paths:
       tags:
         - Users
   /users/{userId}:
-    summary: individual user operations
-    description: get, update, delete a user
+    summary: operations on individual users
+    description: fetch, update, delete a user
     get:
-      summary: fetch one user
-      description: returns a user from the server
+      summary: fetch a single user
+      description: return single user from server
       operationId: fetchUser
       parameters:
         - name: userId
@@ -77,7 +77,7 @@ paths:
             type: string
             example: qwerty
       responses:
-        '2XX':
+        '200':
           $ref: '#/components/responses/UserRespBody'
         default:
           description: Default error sample response
