@@ -3,18 +3,22 @@ info:
   title: My API
   version: '1.0'
   description: some great api
+  termsOfService: https://www.example.com/tos
   contact:
     email: support@example.com
     name: Support
     url: https://www.example.com/contact
+  license:
+    name: License
+    url: https://www.example.com/license
 servers:
-  - url: http://localhost:3000
+  - url: http://localhost:3000/
     variables: {}
-    description: my fake local server api
+    description: my local github server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
-    description: my fake github server api
-  - url: '{scheme}://www.example.com:{port}/{version}'
+    description: my fake github server
+  - url: '{scheme}://www.example.com/{version}'
     variables:
       scheme:
         default: https
@@ -22,28 +26,20 @@ servers:
           - https
           - http
         description: ssl or not
-      port:
-        default: '8080'
-        enum:
-          - '8080'
-          - '8081'
-          - '8082'
-        description: port numbers for dev, test and production
       version:
-        default: v3
+        default: v2
         enum:
-          - v3
           - v2
           - v1
-        description: version of api
-    description: example with variables
+        description: api version
+    description: test variable server
 paths:
   /users:
-    summary: base user level operations
-    description: fetch (GET) all users, create (POST) a new user
+    summary: user level operations
+    description: fetch users, create new users
     get:
-      summary: fetch all users
-      description: return all users from the server
+      summary: fetch users
+      description: returns users from server
       operationId: fetchUsers
       responses:
         2XX:
@@ -65,16 +61,38 @@ paths:
           description: Default error sample response
       tags:
         - Users
+  /users/{userId}:
+    summary: individual user operations
+    description: get, update, delete a user
+    get:
+      summary: fetch one user
+      description: returns a user from the server
+      operationId: fetchUser
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: user id
+          schema:
+            type: string
+            example: qwerty
+      responses:
+        '2XX':
+          $ref: '#/components/responses/UserRespBody'
+        default:
+          description: Default error sample response
+      tags:
+        - Users
 components:
   responses:
     UserArrayResponseBody:
-      description: array of users
+      description: array of Users
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/UserArray'
     UserRespBody:
-      description: successful creation
+      description: array of users
       content:
         application/json:
           schema:
@@ -82,17 +100,16 @@ components:
   requestBodies:
     UserPostBody:
       required: true
-      description: new user POST
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/NewPostBody'
+            $ref: '#/components/schemas/PostNewUser'
   schemas:
     UserArray:
       type: array
       items:
         $ref: '#/components/schemas/FullUser'
-    NewPostBody:
+    PostNewUser:
       type: object
       properties:
         username:
@@ -100,15 +117,15 @@ components:
           example: bear
         score:
           type: integer
-          example: 99
+          example: 55
         active:
           type: boolean
           example: true
     FullUser:
       allOf:
+        - $ref: '#/components/schemas/PostNewUser'
         - type: object
           properties:
             id:
               type: string
               example: qwerty
-        - $ref: '#/components/schemas/NewPostBody'
