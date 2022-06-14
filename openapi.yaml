@@ -2,155 +2,16 @@ openapi: 3.0.1
 info:
   title: My API
   version: '1.0'
-  description: some great api
+  description: some api
   termsOfService: https://www.example.com/tos
   contact:
-    email: support@example.com
-    name: Support
+    email: contact@email.com
+    name: My Team
     url: https://www.example.com/contact
   license:
-    name: License
+    name: My License
     url: https://www.example.com/license
 servers:
-  - url: http://localhost:3000/
-    variables: {}
-    description: my local github server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: my fake github server
-  - url: '{scheme}://www.example.com/{version}'
-    variables:
-      scheme:
-        default: https
-        enum:
-          - https
-          - http
-        description: ssl or not
-      version:
-        default: v2
-        enum:
-          - v2
-          - v1
-        description: api version
-    description: test variable server
-paths:
-  /users:
-    summary: user level operations
-    description: fetch users, create new users
-    get:
-      summary: fetch users
-      description: returns users from server
-      operationId: fetchUsers
-      responses:
-        2XX:
-          $ref: '#/components/responses/UserArrayResponseBody'
-        default:
-          description: Default error sample response
-      tags:
-        - Users
-    post:
-      summary: create a new user
-      description: store user on server
-      operationId: createUser
-      requestBody:
-        $ref: '#/components/requestBodies/UserPostBody'
-      responses:
-        '201':
-          $ref: '#/components/responses/UserRespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - Users
-  /users/{userId}:
-    summary: operations on individual users
-    description: fetch, update, delete a user
-    parameters:
-      - $ref: '#/components/parameters/UserId'
-    get:
-      summary: fetch a single user
-      description: return single user from server
-      operationId: fetchUser
-      responses:
-        '200':
-          $ref: '#/components/responses/UserRespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - Users
-    delete:
-      summary: delete a user
-      description: remove a user from the server
-      operationId: deleteUser
-      responses:
-        default:
-          description: Default error sample response
-      tags:
-        - Users
-    patch:
-      summary: update a user
-      description: store new user data
-      operationId: updateUser
-      requestBody:
-        $ref: '#/components/requestBodies/UserPostBody'
-      responses:
-        '200':
-          $ref: '#/components/responses/UserRespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - Users
-components:
-  parameters:
-    UserId:
-      name: userId
-      in: path
-      required: true
-      description: user id
-      schema:
-        type: string
-        example: qwerty
-  responses:
-    UserArrayResponseBody:
-      description: array of Users
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserArray'
-    UserRespBody:
-      description: array of users
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/FullUser'
-  requestBodies:
-    UserPostBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PostNewUser'
-  schemas:
-    UserArray:
-      type: array
-      items:
-        $ref: '#/components/schemas/FullUser'
-    PostNewUser:
-      type: object
-      properties:
-        username:
-          type: string
-          example: bear
-        score:
-          type: integer
-          example: 55
-        active:
-          type: boolean
-          example: true
-    FullUser:
-      allOf:
-        - $ref: '#/components/schemas/PostNewUser'
-        - type: object
-          properties:
-            id:
-              type: string
-              example: qwerty
