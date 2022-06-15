@@ -28,11 +28,7 @@ paths:
       operationId: fetchUsers
       responses:
         '200':
-          description: successful fetch
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FullUser'
+          $ref: '#/components/responses/UserReqBody'
         default:
           description: Default error sample response
       tags:
@@ -42,24 +38,30 @@ paths:
       description: store a user on the server
       operationId: createUser
       requestBody:
-        description: create a new user
-        required: true
-        content:
-          application/json:
-            schema: 
-              $ref: '#/components/schemas/UserPostReq'
+        $ref: '#/components/requestBodies/UserPostBody'
       responses:
         '201':
-          description: successful creation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FullUser'       
+          $ref: '#/components/responses/UserReqBody'
         default:
           description: Default error sample response
       tags:
         - Users
 components:
+  responses:
+    UserReqBody:
+      description: successful creation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FullUser'   
+  requestBodies:
+    UserPostBody:
+      description: create a new user
+      required: true
+      content:
+        application/json:
+          schema: 
+            $ref: '#/components/schemas/UserPostReq'
   schemas:
     UserPostReq:
       type: object
@@ -74,17 +76,10 @@ components:
           type: boolean
           example: false
     FullUser:
-      type: object
-      properties:
-        id:
-          type: string
-          example: qwerty
-        username:
-          type: string
-          example: bear
-        score:
-          type: integer
-          example: 55
-        active:
-          type: boolean
-          example: true
+      allOf:
+        - type: object
+          properties:
+            id:
+              type: string
+              example: qwerty
+        - $ref: '#/components/schemas/UserPostReq'
