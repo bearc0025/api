@@ -18,6 +18,23 @@ servers:
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: my fake github server
+  - url: http://www.example.com:{port}/{version}
+    variables:
+      port:
+        default: '8000'
+        enum:
+          - '8000'
+          - '8001'
+          - '8002'
+        description: 'ports for: development, testing and production'
+      version:
+        default: v3
+        enum:
+          - v3
+          - v2
+          - v1
+        description: version of the api
+    description: example with variables
 paths:
   /users:
     summary: base user level operations
@@ -46,6 +63,28 @@ paths:
           description: Default error sample response
       tags:
         - Users
+  /users/{userId}:
+    summary: operations on a single user
+    description: fetch, update, delete a user
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        description: unique user id
+        schema:
+          type: string
+          example: qwerty
+    get:
+      summary: fetch a user
+      description: returns a user from the server
+      operationId: fetchUser
+      responses:
+        '200':
+          $ref: '#/components/responses/UserReqBody'
+        default:
+          description: Default error sample response
+      tags:
+        - Users
 components:
   responses:
     UserArrayResponseBody:
@@ -59,14 +98,14 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/FullUser'   
+            $ref: '#/components/schemas/FullUser'
   requestBodies:
     UserPostBody:
       description: create a new user
       required: true
       content:
         application/json:
-          schema: 
+          schema:
             $ref: '#/components/schemas/UserPostReq'
   schemas:
     UserArray:
