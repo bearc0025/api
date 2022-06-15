@@ -2,30 +2,33 @@ openapi: 3.0.1
 info:
   title: My API
   version: '1.0'
-  description: some api
+  description: some api that does things with data
   termsOfService: https://www.example.com/tos
   contact:
-    email: contact@email.com
-    name: My Team
+    email: someemail@example.com
+    name: Contact Name
     url: https://www.example.com/contact
   license:
     name: My License
     url: https://www.example.com/license
 servers:
+  - url: http://localhost:3000
+    variables: {}
+    description: local fake server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
-    description: my fake github server
+    description: fake server at github
 paths:
   /users:
-    summary: base user level operations
-    description: fetch all users, create new users
+    summary: user based operations
+    description: fetch all users, create a new user
     get:
       summary: fetch all users
       description: return all users from server
       operationId: fetchUsers
       responses:
         '200':
-          description: successful fetch
+          description: successful response
           content:
             application/json:
               schema:
@@ -34,12 +37,40 @@ paths:
           description: Default error sample response
       tags:
         - Users
+    post:
+      summary: create a new user
+      description: store user on server
+      operationId: createUser
+      requestBody:
+        description: new user body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostNewUser'
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Users
 components:
   schemas:
+    PostNewUser:
+      type: object
+      properties:
+        username:
+          type: string
+          example: bear
+        score:
+          type: integer
+          example: 55
+        active:
+          type: boolean
+          example: true
     FullUser:
       type: object
       properties:
-        id: 
+        id:
           type: string
           example: qwerty
         username:
@@ -51,4 +82,3 @@ components:
         active:
           type: boolean
           example: true
-    
