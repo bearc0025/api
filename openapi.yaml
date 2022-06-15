@@ -42,18 +42,27 @@ paths:
       description: store user on server
       operationId: createUser
       requestBody:
-        description: new user body
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PostNewUser'
+        $ref: '#/components/requestBodies/UserPostBody'
       responses:
+        '201':
+          description: successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUser'
         default:
           description: Default error sample response
       tags:
         - Users
 components:
+  requestBodies:
+    UserPostBody:
+      description: new user body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PostNewUser'
   schemas:
     PostNewUser:
       type: object
@@ -68,17 +77,10 @@ components:
           type: boolean
           example: true
     FullUser:
-      type: object
-      properties:
-        id:
-          type: string
-          example: qwerty
-        username:
-          type: string
-          example: bear
-        score:
-          type: integer
-          example: 55
-        active:
-          type: boolean
-          example: true
+      allOf:
+        - $ref: '#/components/schemas/PostNewUser'
+        - type: object
+          properties:
+            id:
+              type: string
+              example: qwerty
