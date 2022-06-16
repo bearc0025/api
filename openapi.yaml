@@ -67,12 +67,7 @@ paths:
     summary: operations on one user
     description: fetch, update, delete a user
     parameters:
-      - name: userId
-        in: path
-        required: true
-        schema:
-          type: string
-          example: qwerty
+      - $ref: '#/components/parameters/UserId'
     get:
       summary: fetch a user
       description: return a user by id
@@ -84,7 +79,37 @@ paths:
           description: Default error sample response
       tags:
         - Users
+    delete:
+      summary: delete a user
+      description: remove from server
+      operationId: deleteUser
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Users
+    patch:
+      summary: update user
+      description: store changes on server
+      operationId: updateUser
+      requestBody:
+        $ref: '#/components/requestBodies/UserPostBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserRespBody'
+        default:
+          description: Default error sample response
+      tags:
+        - Users
 components:
+  parameters:
+    UserId:
+      name: userId
+      in: path
+      required: true
+      schema:
+        type: string
+        example: qwerty
   responses:
     UserRespBody:
       description: successful response
