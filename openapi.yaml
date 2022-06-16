@@ -2,11 +2,11 @@ openapi: 3.0.1
 info:
   title: My API
   version: '1.0'
-  description: some api
+  description: some api that does things with data
   termsOfService: https://www.example.com/tos
   contact:
-    email: contact@email.com
-    name: My Team
+    email: someemail@example.com
+    name: Contact Name
     url: https://www.example.com/contact
   license:
     name: My License
@@ -17,8 +17,8 @@ servers:
     description: local fake server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
-    description: my fake github server
-  - url: http://www.example.com:{port}/{version}
+    description: fake server at github
+  - url: https://www.example.com:{port}/{version}
     variables:
       port:
         default: '8000'
@@ -26,19 +26,19 @@ servers:
           - '8000'
           - '8001'
           - '8002'
-        description: 'ports for: development, testing and production'
+        description: port number for testing
       version:
         default: v3
         enum:
           - v3
           - v2
           - v1
-        description: version of the api
+        description: version for api
     description: example with variables
 paths:
   /users:
-    summary: base user level operations
-    description: fetch all users, create new users
+    summary: user based operations
+    description: fetch all users, create a new user
     get:
       summary: fetch all users
       description: return all users from server
@@ -51,84 +51,83 @@ paths:
       tags:
         - Users
     post:
-      summary: create a user
-      description: store a user on the server
+      summary: create a new user
+      description: store user on server
       operationId: createUser
       requestBody:
         $ref: '#/components/requestBodies/UserPostBody'
       responses:
         '201':
-          $ref: '#/components/responses/UserReqBody'
+          $ref: '#/components/responses/UserRespBody'
         default:
           description: Default error sample response
       tags:
         - Users
   /users/{userId}:
-    summary: operations on a single user
+    summary: operations on one user
     description: fetch, update, delete a user
     parameters:
       - name: userId
         in: path
         required: true
-        description: unique user id
         schema:
           type: string
           example: qwerty
     get:
       summary: fetch a user
-      description: returns a user from the server
+      description: return a user by id
       operationId: fetchUser
       responses:
         '200':
-          $ref: '#/components/responses/UserReqBody'
+          $ref: '#/components/responses/UserRespBody'
         default:
           description: Default error sample response
       tags:
         - Users
 components:
   responses:
-    UserArrayResponseBody:
-      description: array of users
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserArray'
-    UserReqBody:
-      description: successful creation
+    UserRespBody:
+      description: successful response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/FullUser'
+    UserArrayResponseBody:
+      description: array of Users
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserArray'
   requestBodies:
     UserPostBody:
-      description: create a new user
+      description: new user body
       required: true
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/UserPostReq'
+            $ref: '#/components/schemas/PostNewUser'
   schemas:
     UserArray:
       type: array
       items:
         $ref: '#/components/schemas/FullUser'
-    UserPostReq:
+    PostNewUser:
       type: object
       properties:
         username:
           type: string
-          example: bearnew
+          example: bear
         score:
           type: integer
-          example: 66
+          example: 55
         active:
           type: boolean
-          example: false
+          example: true
     FullUser:
       allOf:
+        - $ref: '#/components/schemas/PostNewUser'
         - type: object
           properties:
             id:
               type: string
               example: qwerty
-        - $ref: '#/components/schemas/UserPostReq'
