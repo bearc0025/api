@@ -1,94 +1,54 @@
 openapi: 3.0.1
 info:
   title: My API
-  version: 1.0.1
+  version: '1.0'
   description: some great api
   termsOfService: https://www.example.com/
   contact:
-    email: support@example.com
+    email: team@example.com
     name: My Team
     url: https://www.example.com/contact
   license:
     name: My License
     url: https://www.example.com/license
 servers:
-  - url: http://localhost:3000
-    variables: {}
-    description: my local json server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
-    description: github mock server
+    description: demo server at github
 paths:
   /users:
-    summary: fetch all, create new
-    description: Returns all items from the server, create new item with generated id
+    summary: user level operations
+    description: fetch all users, create new user
     get:
-      summary: Users table, max 100
-      description: return all users from the server
+      summary: Accounts table
+      description: return all users from server
       operationId: fetchUsers
       responses:
         '200':
-          $ref: '#/components/responses/UserArrayResponseBody'
-        default:
-          description: Default error sample response
-      tags:
-        - users
-    post:
-      summary: Create new user
-      description: store user on server
-      operationId: createUser
-      requestBody:
-        $ref: '#/components/requestBodies/UserPostBody'
-      responses:
-        '201':
-          $ref: '#/components/responses/UserRespBody'
+          description: successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUser'
         default:
           description: Default error sample response
       tags:
         - users
 components:
-  responses:
-    UserArrayResponseBody:
-      description: array of users
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserArray'
-    UserRespBody:
-      description: full user
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/FullUser'
-  requestBodies:
-    UserPostBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PostNewUser'
   schemas:
-    UserArray:
-      type: array
-      items: 
-        $ref: '#/components/schemas/FullUser'
-    PostNewUser:
+    FullUser:
       type: object
       properties:
+        id:
+          type: string
+          example: qwerty
         username:
           type: string
           example: bear
         score:
           type: integer
-          example: 67
+          example: 55
         active:
           type: boolean
           example: true
-    FullUser:
-      allOf:
-        - $ref: '#/components/schemas/PostNewUser'
-        - type: object
-          properties:
-            id:
-              type: string
-              example: qwerty
+    
