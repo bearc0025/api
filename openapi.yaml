@@ -12,6 +12,9 @@ info:
     name: My License
     url: https://www.example.com/license
 servers:
+  - url: http://localhost:3000/
+    variables: {}
+    description: local server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: demo server at github
@@ -25,23 +28,44 @@ paths:
       operationId: fetchUsers
       responses:
         '200':
-          description: successful response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FullUser'
+          $ref: '#/components/responses/UserRespBody'
+        default:
+          description: Default error sample response
+      tags:
+        - users
+    post:
+      summary: Create a new User
+      description: Store a User on the server
+      operationId: createUser
+      requestBody:
+        $ref: '#/components/requestBodies/UserPostBody'
+      responses:
+        '201':
+          $ref: '#/components/responses/UserRespBody'
         default:
           description: Default error sample response
       tags:
         - users
 components:
+  responses:
+    UserRespBody:
+      description: successful response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FullUser'
+  requestBodies:
+    UserPostBody:
+      description: body of user
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PostNewUser'
   schemas:
-    FullUser:
+    PostNewUser:
       type: object
       properties:
-        id:
-          type: string
-          example: qwerty
         username:
           type: string
           example: bear
@@ -51,4 +75,11 @@ components:
         active:
           type: boolean
           example: true
-    
+    FullUser:
+      allOf:
+        - $ref: '#/components/schemas/PostNewUser'
+        - type: object
+          properties:
+            id:
+              type: string
+              example: qwerty
