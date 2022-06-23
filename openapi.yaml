@@ -1,23 +1,23 @@
 openapi: 3.0.1
 info:
   title: My API
-  version: 1.0.1
+  version: '1.0'
   description: some great api
   termsOfService: https://www.example.com/
   contact:
-    email: support@example.com
+    email: team@example.com
     name: My Team
     url: https://www.example.com/contact
   license:
     name: My License
     url: https://www.example.com/license
 servers:
-  - url: http://localhost:3000
+  - url: http://localhost:3000/
     variables: {}
-    description: my local json server
+    description: local server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
-    description: github mock server
+    description: demo server at github
   - url: https://www.example.com:{port}/{version}
     variables:
       port:
@@ -25,33 +25,33 @@ servers:
         enum:
           - '8000'
           - '8001'
-        description: port variable
+        description: port 8000 (dev) and 8001 (prod)
       version:
         default: v3
         enum:
           - v3
           - v2
           - v1
-        description: api version
-    description: example variable server
+        description: all versions
+    description: example server
 paths:
   /users:
-    summary: fetch all, create new
-    description: Returns all items from the server, create new item with generated id
+    summary: user level operations
+    description: fetch all users, create new user
     get:
-      summary: Users table, max 100
-      description: return all users from the server
+      summary: Accounts table
+      description: return all users from server
       operationId: fetchUsers
       responses:
         '200':
           $ref: '#/components/responses/UserArrayResponseBody'
         default:
-          description: Default error sample response
+          $ref: '#/components/responses/DefaultResponse'
       tags:
         - users
     post:
-      summary: Create new user
-      description: store user on server
+      summary: Create a new User
+      description: Store a User on the server
       operationId: createUser
       requestBody:
         $ref: '#/components/requestBodies/UserPostBody'
@@ -59,77 +59,68 @@ paths:
         '201':
           $ref: '#/components/responses/UserRespBody'
         default:
-          description: Default error sample response
+          $ref: '#/components/responses/DefaultResponse'
       tags:
         - users
   /users/{userId}:
-    summary: User level operations
-    description: Fetch, update, delete a user
-    parameters:
-      - $ref: '#/components/parameters/UserId'
+    summary: user specific operations
+    description: fetch, update, delete a user
     get:
-      summary: Fetch a user
+      summary: fetch a user
       description: returns a user from the server
       operationId: fetchUser
       parameters:
-        - name: searchString
-          in: query
+        - name: userId
+          in: path
+          required: true
+          description: user id
           schema:
             type: string
-            example: account
+            example: qwerty
+        - name: page
+          in: query
+          description: page of results
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
       responses:
         '200':
           $ref: '#/components/responses/UserRespBody'
         default:
-          description: Default error sample response
-      tags:
-        - users
-    delete:
-      summary: delete a user
-      description: remove user from server
-      operationId: deleteUser
-      responses:
-        default:
-          description: Default error sample response
-      tags:
-        - users
-    patch:
-      summary: update a user
-      description: updates a user online
-      operationId: updateUser
-      requestBody:
-        $ref: '#/components/requestBodies/UserPostBody'
-      responses:
-        '201':
-          $ref: '#/components/responses/UserRespBody'
-        default:
-          description: Default error sample response
+          $ref: '#/components/responses/DefaultResponse'
       tags:
         - users
 components:
-  parameters:
-    UserId:
-      name: userId
-      in: path
-      required: true
-      schema:
-        type: string
-        example: qwerty
   responses:
+    DefaultResponse:
+      description: default message from server
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 123
+              message:
+                type: string
+                example: error...
     UserArrayResponseBody:
-      description: array of users
+      description: response of users array
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/UserArray'
     UserRespBody:
-      description: full user
+      description: successful response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/FullUser'
   requestBodies:
     UserPostBody:
+      description: body of user
       required: true
       content:
         application/json:
@@ -148,7 +139,7 @@ components:
           example: bear
         score:
           type: integer
-          example: 67
+          example: 55
         active:
           type: boolean
           example: true
