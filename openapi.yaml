@@ -65,18 +65,18 @@ components:
       properties:
         username:
           type: string
-          example: newUser
+          example: bear123
         score:
           type: integer
-          example: 0
+          example: 56
         active:
           type: boolean
-          example: false
+          example: true
     FullUser:
       allOf:
-      - $ref: '#/components/schemas/NewUser'
-      - type: object
-        properties:
-          id:
-            type: string
-            example: 1234dsaf
+        - $ref: '#/components/schemas/NewUser'
+        - type: object
+          properties:
+            id:
+              type: string
+              example: 1234dsaf
