@@ -38,7 +38,7 @@ paths:
       operationId: fetchUsers
       responses:
         '200':
-          $ref: '#/components/responses/UserArrayResp'
+          $ref: '#/components/responses/UserArray'
         default:
           description: Default error sample response
       tags:
@@ -51,85 +51,12 @@ paths:
         $ref: '#/components/requestBodies/PostBody'
       responses:
         '201':
-          $ref: '#/components/responses/RespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - users
-    put:
-      summary: update a new user
-      description: update a user on the server
-      operationId: replaceUser
-      requestBody:
-        $ref: '#/components/requestBodies/PostBody'
-      responses:
-        '201':
-          $ref: '#/components/responses/RespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - users
-  /users/{userId}:
-    summary: user based operations
-    description: update and delete user
-    parameters:
-      - $ref: '#/components/parameters/UserId'
-    get:
-      summary: fetch a user
-      description: returns a user from the server
-      operationId: fetchUser
-      responses:
-        '200':
-          $ref: '#/components/responses/RespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - users
-    delete:
-      summary: delete a user
-      description: delete a user from the server
-      operationId: deleteUser
-      responses:
-        default:
-          description: Default error sample response
-      tags:
-        - users
-    patch:
-      summary: update a new user
-      description: update a user on the server
-      operationId: updateUser
-      requestBody:
-        $ref: '#/components/requestBodies/PostBody'
-      responses:
-        '200':
-          $ref: '#/components/responses/RespBody'
+          $ref: '#/components/responses/UserResp'
         default:
           description: Default error sample response
       tags:
         - users
 components:
-  parameters:
-    UserId:
-      name: userId
-      in: path
-      required: true
-      description: the user id
-      schema:
-        type: string
-        example: bear1234    
-  responses:
-    UserArrayResp:
-      description: success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserArray'
-    RespBody:
-      description: success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/FullUser'
   requestBodies:
     PostBody:
       required: true
@@ -137,6 +64,19 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/NewUser'
+  responses:
+    UserArray:
+      description: array of users
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserArray'
+    UserResp:
+      description: success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FullUser'
   schemas:
     UserArray:
       type: array
@@ -151,6 +91,7 @@ components:
         score:
           type: integer
           example: 56
+          minimum: 0
         active:
           type: boolean
           example: true
