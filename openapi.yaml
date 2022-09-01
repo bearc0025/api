@@ -28,11 +28,7 @@ paths:
       operationId: fetchUsers
       responses:
         '200':
-          description: success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FullUser'
+          $ref: '#/components/responses/UserArrayResp'
         default:
           description: Default error sample response
       tags:
@@ -42,24 +38,40 @@ paths:
       description: store a user on the server
       operationId: createUser
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/NewUser'
+        $ref: '#/components/requestBodies/PostBody'
       responses:
         '201':
-          description: success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FullUser'
+          $ref: '#/components/responses/RespBody'
         default:
           description: Default error sample response
       tags:
         - users
 components:
+  responses:
+    UserArrayResp:
+      description: success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserArray'
+    RespBody:
+      description: success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FullUser'    
+  requestBodies:
+    PostBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewUser'
   schemas:
+    UserArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/FullUser'
     NewUser:
       type: object
       properties:
