@@ -2,48 +2,12 @@ openapi: 3.0.1
 info:
   title: MySEBAPI
   version: '1.0'
-  description: a great api
-  termsOfService: https://www.example.com
+  description: this great api from SEB
+  termsOfService: https://www.example.com/tos
   contact:
-    email: support@example.com
+    email: contact@example.com
     name: Support
     url: https://www.example.com/contact
   license:
     name: License
     url: https://www.example.com/license
-servers:
-  - url: https://my-json-server.typicode.com/bearc0025/api
-    variables: {}
-    description: My fake github server
-paths:  
-  /users:
-    summary: user based endpoints
-    description: fetch all users, create new user
-    get:
-      summary: fetch all users
-      description: return users from server
-      operationId: fetchUsers
-      responses:
-        '200':
-          description: successful
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    example: 1234abc
-                  username:
-                    type: string
-                    example: bearc123
-                  score:
-                    type: integer
-                    example: 55
-                  active:
-                    type: boolean
-                    example: false
-        default:
-          description: Default error sample response
-      tags:
-        - users
