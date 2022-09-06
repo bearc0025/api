@@ -11,3 +11,7 @@ info:
   license:
     name: License
     url: https://www.example.com/license
+servers:
+  - url: https://my-json-server.typicode.com/bearc0025/api
+    variables: {}
+    description: my fake api server on github
