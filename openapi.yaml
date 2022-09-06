@@ -1,105 +1,13 @@
 openapi: 3.0.1
 info:
   title: MySEBAPI
-  version: 1.0.1
-  description: My SEB api for...
-  termsOfService: https://www.example.com/tos
+  version: '1.0'
+  description: a great api
+  termsOfService: https://www.example.com
   contact:
     email: support@example.com
-    name: API Support
+    name: Support
     url: https://www.example.com/contact
   license:
     name: License
     url: https://www.example.com/license
-servers:
-  - url: http://localhost:3000/
-    variables: {}
-    description: My fake local server
-  - url: https://my-json-server.typicode.com/bearc0025/api
-    variables: {}
-    description: My fake github server
-  - url: https://www.example.com:{port}/api
-    variables:
-      port:
-        default: '3000'
-        enum:
-          - '3000'
-          - '3003'
-          - '3002'
-        description: 3000 is test, 3003 is dev, 3002 is prod
-    description: test server
-paths:
-  /users:
-    summary: user level operations
-    description: fetch all users, create new user
-    get:
-      summary: fetch all users
-      description: returns all users from server
-      operationId: fetchUsers
-      responses:
-        '200':
-          $ref: '#/components/responses/UserArray'
-        default:
-          description: Default error sample response
-      tags:
-        - users
-    post:
-      summary: create a new user
-      description: store a user on the server
-      operationId: createUser
-      requestBody:
-        $ref: '#/components/requestBodies/PostBody'
-      responses:
-        '201':
-          $ref: '#/components/responses/UserResp'
-        default:
-          description: Default error sample response
-      tags:
-        - users
-components:
-  requestBodies:
-    PostBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewUser'
-  responses:
-    UserArray:
-      description: array of users
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserArray'
-    UserResp:
-      description: success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/FullUser'
-  schemas:
-    UserArray:
-      type: array
-      items:
-        $ref: '#/components/schemas/FullUser'
-    NewUser:
-      type: object
-      properties:
-        username:
-          type: string
-          example: bear123
-        score:
-          type: integer
-          example: 56
-          minimum: 0
-        active:
-          type: boolean
-          example: true
-    FullUser:
-      allOf:
-        - $ref: '#/components/schemas/NewUser'
-        - type: object
-          properties:
-            id:
-              type: string
-              example: 1234dsaf
