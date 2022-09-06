@@ -15,7 +15,7 @@ servers:
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: My fake github server
-paths:
+paths:  
   /users:
     summary: user based endpoints
     description: fetch all users, create new user
@@ -24,6 +24,25 @@ paths:
       description: return users from server
       operationId: fetchUsers
       responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 1234abc
+                  username:
+                    type: string
+                    example: bearc123
+                  score:
+                    type: integer
+                    example: 55
+                  active:
+                    type: boolean
+                    example: false
         default:
           description: Default error sample response
       tags:
