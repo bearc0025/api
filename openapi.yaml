@@ -24,19 +24,34 @@ paths:
       description: returns users from server
       operationId: fetchUsers
       responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 1234asdf
+                  username:
+                    type: string
+                    example: bear2133
+                  score:
+                    type: integer
+                    example: 66
+                  active:
+                    type: boolean
+                    example: true
         default:
           description: Default error sample response
       tags:
         - users
-  /attempts:
-    summary: attempts level operations
-    description: fetch attempts, create new attempts
-    get:
-      summary: fetch attempts from server
-      description: returns attempts from server
-      operationId: fetchAttempts
-      responses:
-        default:
-          description: Default error sample response
-      tags:
-        - attempts
+
+
+
+
+
+
+
+
