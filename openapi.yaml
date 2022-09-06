@@ -15,3 +15,28 @@ servers:
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: my fake api server on github
+paths:
+  /users:
+    summary: user level operations
+    description: fetch users, create new users
+    get:
+      summary: fetch users from server
+      description: returns users from server
+      operationId: fetchUsers
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - users
+  /attempts:
+    summary: attempts level operations
+    description: fetch attempts, create new attempts
+    get:
+      summary: fetch attempts from server
+      description: returns attempts from server
+      operationId: fetchAttempts
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - attempts
