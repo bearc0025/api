@@ -42,6 +42,20 @@ paths:
       summary: fetch users from server
       description: returns users from server
       operationId: fetchUsers
+      parameters:
+        - name: _embed
+          in: query
+          required: false
+          schema:
+            type: string
+            example: attempts
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            example: 4
+            minimum: 0
       responses:
         '200':
           $ref: '#/components/responses/UserArrayResponseBody'
@@ -66,12 +80,7 @@ paths:
     summary: indiv user operations
     description: fetch, update, delete user
     parameters:
-      - name: userId
-        in: path
-        required: true
-        schema:
-          type: string
-          example: qwerty
+      - $ref: '#/components/parameters/UserId'
     get:
       summary: fetch a user
       description: return a user from the server
@@ -84,6 +93,14 @@ paths:
       tags:
         - users
 components:
+  parameters:
+    UserId:
+      name: userId
+      in: path
+      required: true
+      schema:
+        type: string
+        example: qwerty
   responses:
     UserArrayResponseBody:
       description: array of users
