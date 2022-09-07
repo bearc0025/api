@@ -1,17 +1,20 @@
 openapi: 3.0.1
 info:
   title: MySEBAPI
-  version: '1.0'
+  version: 1.5.1
   description: this great api from SEB
   termsOfService: https://www.example.com/tos
   contact:
-    email: support@example.com
-    name: Support
+    email: contact@example.com
+    name: IT Team
     url: https://www.example.com/contact
   license:
     name: License
     url: https://www.example.com/license
 servers:
+  - url: http://localhost:3000
+    variables: {}
+    description: local fake server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: my fake api server on github
@@ -25,23 +28,53 @@ paths:
       operationId: fetchUsers
       responses:
         '200':
-          description: successful
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FullUser'
+          $ref: '#/components/responses/UserArrayResponseBody'
+        default:
+          description: Default error sample response
+      tags:
+        - users
+    post:
+      summary: create user
+      description: store user on server
+      operationId: createUser
+      requestBody:
+        $ref: '#/components/requestBodies/UserPostBody'
+      responses:
+        '201':
+          $ref: '#/components/responses/UserRespBody'
         default:
           description: Default error sample response
       tags:
         - users
 components:
+  responses:
+    UserArrayResponseBody:
+      description: user array
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserArray'
+    UserRespBody:
+      description: successful
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FullUser'
+  requestBodies:
+    UserPostBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PostNewUser'
   schemas:
-    FullUser:
+    UserArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/FullUser'
+    PostNewUser:
       type: object
       properties:
-        id:
-          type: string
-          example: 1234asdf
         username:
           type: string
           example: bear2133
@@ -51,9 +84,11 @@ components:
         active:
           type: boolean
           example: true
-
-
-
-
-
-
+    FullUser:
+      allOf:
+      - $ref: '#/components/schemas/PostNewUser'
+      - type: object
+        properties:
+          id:
+            type: string
+            example: 1234asdf
