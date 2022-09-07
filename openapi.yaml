@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: MySEBAPI
-  version: '1.0.2'
+  version: 1.0.2
   description: this great api from SEB
   termsOfService: https://www.example.com/tos
   contact:
@@ -37,6 +37,37 @@ paths:
           description: Default error sample response
       tags:
         - users
+    post:
+      summary: create a new user
+      description: store a user on the server
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: bear2133
+                score:
+                  type: integer
+                  example: 66
+                active:
+                  type: boolean
+                  example: true
+      responses:
+        '201':
+          description: successful response of user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUser'
+        default:
+          description: Default error sample response
+      tags:
+        - users
 components:
   schemas:
     FullUser:
@@ -54,10 +85,3 @@ components:
         active:
           type: boolean
           example: true
-
-
-
-
-
-
-
