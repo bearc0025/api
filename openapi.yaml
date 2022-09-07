@@ -1,17 +1,20 @@
 openapi: 3.0.1
 info:
   title: MySEBAPI
-  version: '1.0'
+  version: '1.0.2'
   description: this great api from SEB
   termsOfService: https://www.example.com/tos
   contact:
-    email: contact@example.com
+    email: support@example.com
     name: Support
     url: https://www.example.com/contact
   license:
     name: License
     url: https://www.example.com/license
 servers:
+  - url: http://localhost:3000
+    variables: {}
+    description: my fake api server local
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: my fake api server on github
@@ -25,7 +28,7 @@ paths:
       operationId: fetchUsers
       responses:
         '200':
-          description: successful
+          description: successful response of user
           content:
             application/json:
               schema:
