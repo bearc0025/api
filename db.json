@@ -1,95 +1,51 @@
-openapi: 3.0.1
-info:
-  title: MySEBAPI
-  version: 1.5.1
-  description: this great api from SEB
-  termsOfService: https://www.example.com/tos
-  contact:
-    email: contact@example.com
-    name: IT Team
-    url: https://www.example.com/contact
-  license:
-    name: License
-    url: https://www.example.com/license
-servers:
-  - url: http://localhost:3000
-    variables: {}
-    description: local fake server
-  - url: https://my-json-server.typicode.com/bearc0025/api
-    variables: {}
-    description: my fake api server on github
-paths:
-  /users:
-    summary: user level operations
-    description: fetch users, create new users
-    get:
-      summary: fetch users from server
-      description: returns users from server
-      operationId: fetchUsers
-      responses:
-        '200':
-          $ref: '#/components/responses/UserArrayResponseBody'
-        default:
-          description: Default error sample response
-      tags:
-        - users
-    post:
-      summary: create user
-      description: store user on server
-      operationId: createUser
-      requestBody:
-        $ref: '#/components/requestBodies/UserPostBody'
-      responses:
-        '201':
-          $ref: '#/components/responses/UserRespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - users
-components:
-  responses:
-    UserArrayResponseBody:
-      description: user array
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserArray'
-    UserRespBody:
-      description: successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/FullUser'
-  requestBodies:
-    UserPostBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PostNewUser'
-  schemas:
-    UserArray:
-      type: array
-      items:
-        $ref: '#/components/schemas/FullUser'
-    PostNewUser:
-      type: object
-      properties:
-        username:
-          type: string
-          example: bear2133
-        score:
-          type: integer
-          example: 66
-        active:
-          type: boolean
-          example: true
-    FullUser:
-      allOf:
-      - $ref: '#/components/schemas/PostNewUser'
-      - type: object
-        properties:
-          id:
-            type: string
-            example: 1234asdf
-  
+{
+  "users": [
+    {
+      "id": "1234abc",
+      "username": "bear",
+      "score": 55,
+      "active": true
+    },
+    {
+      "id": "xyz123",
+      "username": "schmeb",
+      "score": 550,
+      "active": false
+    },
+    {
+      "id": "qwerty",
+      "username": "jed",
+      "score": 553,
+      "active": true
+    },
+    {
+      "username": "bear",
+      "score": 55,
+      "active": true,
+      "id": "i1HYeyQ"
+    },
+    {
+      "username": "bearsept7",
+      "score": 66,
+      "active": true,
+      "id": "EN4bl4a"
+    }
+  ],
+  "attempts": [
+    {
+      "id": "a1",
+      "score": 5,
+      "userId": "qwerty"
+    },
+    {
+      "id": "bb2",
+      "score": 3,
+      "userId": "xyz123"
+    },
+    {
+      "id": "999",
+      "score": 8,
+      "userId": "qwerty"
+    }
+  ]
+}
