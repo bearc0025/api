@@ -18,6 +18,22 @@ servers:
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: my fake api server on github
+  - url: https://my-json-server.typicode.com/{gitaccount}/{reponame}
+    variables:
+      gitaccount:
+        default: bearc0025
+        enum:
+          - bearc0025
+          - otheraccountname
+        description: various accounts
+      reponame:
+        default: api
+        enum:
+          - api
+          - other
+          - repo
+        description: repo name
+    description: server with variables
 paths:
   /users:
     summary: user level operations
@@ -86,9 +102,9 @@ components:
           example: true
     FullUser:
       allOf:
-      - $ref: '#/components/schemas/PostNewUser'
-      - type: object
-        properties:
-          id:
-            type: string
-            example: 1234asdf
+        - $ref: '#/components/schemas/PostNewUser'
+        - type: object
+          properties:
+            id:
+              type: string
+              example: 1234asdf
