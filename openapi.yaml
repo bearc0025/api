@@ -18,6 +18,22 @@ servers:
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: my fake api server on github
+  - url: https://my-json-server.typicode.com/{gitaccount}/{reponame}
+    variables:
+      gitaccount:
+        default: bearc0025
+        enum:
+          - bearc0025
+          - abc1234
+          - 1234asdf
+        description: 'bearc0025: dev, abc1234: test, 1234asdf: production'
+      reponame:
+        default: api
+        enum:
+          - api
+          - sebapi
+        description: desc here
+    description: online fake server
 paths:
   /users:
     summary: user level operations
