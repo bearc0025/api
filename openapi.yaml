@@ -62,7 +62,32 @@ paths:
           description: Default error sample response
       tags:
         - users
+  /users/{userId}:
+    summary: indiv user operations
+    description: get user, update user, delete user
+    parameters:
+      - $ref: '#/components/parameters/UserId'
+    get:
+      summary: fetch user
+      description: returns user from server
+      operationId: fetchUser
+      responses:
+        '200':
+          $ref: '#/components/responses/UserRespBody'
+        default:
+          description: Default error sample response
+      tags:
+        - users
 components:
+  parameters:
+    UserId:
+      name: userId
+      in: path
+      required: true
+      description: user id
+      schema:
+        type: string
+        example: 1234abc    
   responses:
     UserArrayResponseBody:
       description: user array
