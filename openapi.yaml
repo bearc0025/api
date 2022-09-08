@@ -80,7 +80,7 @@ paths:
         - users
     delete:
       summary: delete a user
-      description: remove user from server
+      description: remove a user from the server
       operationId: deleteUser
       responses:
         default:
@@ -88,8 +88,8 @@ paths:
       tags:
         - users
     patch:
-      summary: update user
-      description: update user
+      summary: update a user
+      description: update server data for user
       operationId: updateUser
       requestBody:
         $ref: '#/components/requestBodies/UserPostBody'
