@@ -1,158 +1,30 @@
 openapi: 3.0.1
 info:
-  title: MySEBAPI
-  version: 1.5.1
-  description: this great api from SEB
+  title: My SEB API
+  version: '1.0'
+  description: an api that fetches...
   termsOfService: https://www.example.com/tos
   contact:
-    email: contact@example.com
-    name: IT Team
+    email: support@example.com
+    name: Support
     url: https://www.example.com/contact
   license:
     name: License
     url: https://www.example.com/license
 servers:
-  - url: http://localhost:3000
-    variables: {}
-    description: local fake server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
-    description: my fake api server on github
-  - url: https://my-json-server.typicode.com/{gitaccount}/{reponame}
-    variables:
-      gitaccount:
-        default: bearc0025
-        enum:
-          - bearc0025
-          - otheraccountname
-        description: various accounts
-      reponame:
-        default: api
-        enum:
-          - api
-          - other
-          - repo
-        description: repo name
-    description: server with variables
+    description: my fake typicode on github
 paths:
   /users:
     summary: user level operations
-    description: fetch users, create new users
+    description: fetch users, create new user
     get:
       summary: fetch users from server
-      description: returns users from server
+      description: returns user objects from server
       operationId: fetchUsers
       responses:
-        '200':
-          $ref: '#/components/responses/UserArrayResponseBody'
         default:
           description: Default error sample response
       tags:
         - users
-    post:
-      summary: create user
-      description: store user on server
-      operationId: createUser
-      requestBody:
-        $ref: '#/components/requestBodies/UserPostBody'
-      responses:
-        '201':
-          $ref: '#/components/responses/UserRespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - users
-  /users/{userId}:
-    summary: indiv user operations
-    description: get user, update user, delete user
-    parameters:
-      - $ref: '#/components/parameters/UserId'
-    get:
-      summary: fetch user
-      description: returns user from server
-      operationId: fetchUser
-      responses:
-        '200':
-          $ref: '#/components/responses/UserRespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - users
-    delete:
-      summary: delete a user
-      description: remove a user from the server
-      operationId: deleteUser
-      responses:
-        default:
-          description: Default error sample response
-      tags:
-        - users
-    patch:
-      summary: update a user
-      description: update server data for user
-      operationId: updateUser
-      requestBody:
-        $ref: '#/components/requestBodies/UserPostBody'
-      responses:
-        '200':
-          $ref: '#/components/responses/UserRespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - users
-components:
-  parameters:
-    UserId:
-      name: userId
-      in: path
-      required: true
-      description: user id
-      schema:
-        type: string
-        example: 1234abc
-  responses:
-    UserArrayResponseBody:
-      description: user array
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserArray'
-    UserRespBody:
-      description: successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/FullUser'
-  requestBodies:
-    UserPostBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PostNewUser'
-  schemas:
-    UserArray:
-      type: array
-      items:
-        $ref: '#/components/schemas/FullUser'
-    PostNewUser:
-      type: object
-      properties:
-        username:
-          type: string
-          example: bear2133
-        score:
-          type: integer
-          example: 66
-          minimum: 0
-        active:
-          type: boolean
-          example: true
-    FullUser:
-      allOf:
-        - $ref: '#/components/schemas/PostNewUser'
-        - type: object
-          properties:
-            id:
-              type: string
-              example: 1234asdf
