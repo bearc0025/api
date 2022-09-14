@@ -65,13 +65,7 @@ paths:
     summary: user level operations
     description: fetch, update, delete user
     parameters:
-      - name: userId
-        in: path
-        required: true
-        description: user id
-        schema:
-          type: string
-          example: 123abc
+      - $ref: '#/components/parameters/UserId'
     get:
       summary: fetch a user
       description: returns a user from the server
@@ -84,6 +78,15 @@ paths:
       tags:
         - users
 components:
+  parameters:
+    UserId:
+      name: userId
+      in: path
+      required: true
+      description: user id
+      schema:
+        type: string
+        example: 123abc    
   requestBodies:
     UserPostBody:
       description: new user
