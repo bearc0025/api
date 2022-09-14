@@ -47,17 +47,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                  example: bear23432
-                score:
-                  type: integer
-                  example: 67
-                active:
-                  type: boolean
-                  example: false
+              $ref: '#/components/schemas/PostNewUser'
       responses:
         default:
           description: Default error sample response
@@ -65,12 +55,9 @@ paths:
         - users
 components:
   schemas:
-    FullUser:
+    PostNewUser:
       type: object
       properties:
-        id:
-          type: string
-          example: 1234asdf
         username:
           type: string
           example: bear23432
@@ -80,3 +67,11 @@ components:
         active:
           type: boolean
           example: false
+    FullUser:
+      allOf:
+      - $ref: '#/components/schemas/PostNewUser'
+      - type: object
+        properties:
+          id:
+            type: string
+            example: 1234asdf
