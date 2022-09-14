@@ -12,27 +12,9 @@ info:
     name: License
     url: https://www.example.com/license
 servers:
-  - url: http://localhost:3000
-    variables: {}
-    description: local fake server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: my fake github server
-  - url: https://www.example.com:{port}/{version}
-    variables:
-      port:
-        default: '3000'
-        enum:
-          - '3000'
-          - '3001'
-        description: '3000: dev, 3001: prod'
-      version:
-        default: v2
-        enum:
-          - v2
-          - v1
-        description: versions
-    description: server for api
 paths:
   /users:
     summary: fetch all users, create a new user
@@ -43,100 +25,23 @@ paths:
       operationId: fetchUsers
       responses:
         '200':
-          $ref: '#/components/responses/UserArrayRespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - users
-    post:
-      summary: create new user
-      description: store user on server
-      operationId: createUser
-      requestBody:
-        $ref: '#/components/requestBodies/UserPostBody'
-      responses:
-        '201':
-          $ref: '#/components/responses/UserRespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - users
-  /users/{userId}:
-    summary: user operations
-    description: get, update, delete a user
-    parameters:
-      - $ref: '#/components/parameters/UserId'
-    get:
-      summary: fetch user from server
-      description: returns user from server api
-      operationId: fetchUser
-      responses:
-        '200':
-          $ref: '#/components/responses/UserRespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - users
-    delete:
-      summary: delete a user
-      description: remove user from server
-      operationId: deleteUser
-      responses:
-        default:
-          description: Default error sample response
-      tags:
-        - users
-    patch:
-      summary: update a user
-      description: store changes on server
-      operationId: updateUser
-      requestBody:
-        $ref: '#/components/requestBodies/UserPostBody'
-      responses:
-        '200':
-          $ref: '#/components/responses/UserRespBody'
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUser'
         default:
           description: Default error sample response
       tags:
         - users
 components:
-  parameters:
-    UserId:
-      name: userId
-      in: path
-      required: true
-      schema:
-        type: string
-        example: bear1234
-  requestBodies:
-    UserPostBody:
-      description: new user
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PostNewUser'
-  responses:
-    UserArrayRespBody:
-      description: user array response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserArray'
-    UserRespBody:
-      description: success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/FullUser'
   schemas:
-    UserArray:
-      type: array
-      items:
-        $ref: '#/components/schemas/FullUser'
-    PostNewUser:
+    FullUser:
       type: object
       properties:
+        id:
+          type: string
+          example: 1234asdf
         username:
           type: string
           example: bear23432
@@ -146,11 +51,4 @@ components:
         active:
           type: boolean
           example: false
-    FullUser:
-      allOf:
-        - $ref: '#/components/schemas/PostNewUser'
-        - type: object
-          properties:
-            id:
-              type: string
-              example: 1234asdf
+          
