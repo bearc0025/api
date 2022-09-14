@@ -59,6 +59,12 @@ paths:
                   type: boolean
                   example: false
       responses:
+        '201':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUser'
         default:
           description: Default error sample response
       tags:
