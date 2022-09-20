@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: My SEB API
   version: '1.0'
-  description: an api to do some things...
+  description: an api to do some stuff...
   termsOfService: https://www.example.com
   contact:
     email: support@example.com
@@ -11,3 +11,8 @@ info:
   license:
     name: License
     url: https://www.example.com/license
+servers:
+  - url: https://my-json-server.typicode.com/bearc0025/api
+    variables: {}
+    description: my fake github server
+
