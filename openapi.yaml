@@ -18,6 +18,21 @@ servers:
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: my fake github server
+  - url: https://www.example.com:{port}/{version}
+    variables:
+      port:
+        default: '3000'
+        enum:
+          - '3000'
+          - '3001'
+        description: '3000: dev, 3001: test'
+      version:
+        default: v2
+        enum:
+          - v2
+          - v1
+        description: versions
+    description: development server
 paths:
   /users:
     summary: users path level operations
