@@ -42,41 +42,34 @@ paths:
       description: stores user on server
       operationId: createUser
       requestBody:
-        description: request body
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                  example: bearc
-                score:
-                  type: integer
-                  example: 234
-                action:
-                  type: boolean
-                  example: true
+        $ref: '#/components/requestBodies/UserPostBody'
       responses:
         '201':
-          description: success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FullUser'
+          $ref: '#/components/responses/UserRespBody'
         default:
           description: Default error sample response
       tags:
         - users
 components:
+  responses:
+    UserRespBody:
+      description: success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FullUser'
+  requestBodies:
+    UserPostBody:
+      description: request body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PostNewUser'
   schemas:
-    FullUser:
+    PostNewUser:
       type: object
       properties:
-        id:
-          type: string
-          example: 1234abc
         username:
           type: string
           example: bearc
@@ -86,3 +79,11 @@ components:
         action:
           type: boolean
           example: true
+    FullUser:
+      allOf:
+        - $ref: '#/components/schemas/PostNewUser'
+        - type: object
+          properties:
+            id:
+              type: string
+              example: 1234abc
