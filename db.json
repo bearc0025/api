@@ -7,28 +7,16 @@
       "active": true
     },
     {
-      "id": "xyz123",
-      "username": "schmeb",
-      "score": 550,
-      "active": false
-    },
-    {
       "id": "qwerty",
       "username": "jed",
       "score": 553,
       "active": true
     },
     {
-      "username": "bear",
-      "score": 55,
+      "username": "schmeb",
+      "score": 59,
       "active": true,
       "id": "i1HYeyQ"
-    },
-    {
-      "username": "bearsept7",
-      "score": 66,
-      "active": true,
-      "id": "EN4bl4a"
     }
   ],
   "attempts": [
@@ -36,11 +24,6 @@
       "id": "a1",
       "score": 5,
       "userId": "qwerty"
-    },
-    {
-      "id": "bb2",
-      "score": 3,
-      "userId": "xyz123"
     },
     {
       "id": "999",
