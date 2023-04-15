@@ -22,6 +22,7 @@ jobs:
       - uses: kong/setup-inso@v1
         with:
           inso-version: 2.4.0
+          compression: gzip
       - name: Lint
         run: inso lint spec "My API" --ci
       - name: Run test suites
