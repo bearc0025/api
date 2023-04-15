@@ -23,6 +23,6 @@ jobs:
         with:
           inso-version: 3.13.0
       - name: Lint
-        run: inso lint spec "My API" --ci
+        run: inso lint spec "spc_e4343f" --ci
       - name: Run test suites
-        run: inso run test "APITests" --env "env_env_65edc1" --ci
+        run: inso run test "uts_c695a0" --env "env_env_65edc1" --ci
