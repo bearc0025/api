@@ -24,7 +24,37 @@ paths:
       description: returns users from server
       operationId: fetchUsers
       responses:
+        '2XX':
+          description: "success"
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 1234abc
+                  username:
+                    type: string
+                    example: bear
+                  score:
+                    type: integer
+                    example: 55
+                  active: 
+                    type: boolean
+                    example: true
         default:
-          description: Default error sample response
+          description: Default response
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: server message
+                  code:
+                    type: integer
+                    example: 980
       tags:
         - Users
