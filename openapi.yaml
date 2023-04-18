@@ -1,154 +1,49 @@
 openapi: 3.0.1
 info:
-  title: My SEB API
+  title: MyAPI4am
   version: '1.0'
-  description: an api to do some stuff...
-  termsOfService: https://www.example.com
+  description: my api to the data that...
+  termsOfService: https://www.example.com/tos
   contact:
-    email: support@example.com
-    name: Support
+    email: bear@example.com
+    name: Support Team
     url: https://www.example.com/contact
   license:
-    name: License
+    name: License Here
     url: https://www.example.com/license
 servers:
-  - url: http://localhost:3000
-    variables: {}
-    description: my local fake server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
-    description: my fake github server
-  - url: https://www.example.com:{port}/{version}
-    variables:
-      port:
-        default: '3000'
-        enum:
-          - '3000'
-          - '3001'
-        description: '3000: dev, 3001: prod'
-      version:
-        default: v3
-        enum:
-          - v3
-          - v2
-          - v1
-        description: versions
-    description: variables...
+    description: My Demo server at github
 paths:
   /users:
-    summary: users path level operations
-    description: returns users from server, create a user
+    summary: users level operations
+    description: get and post users
     get:
-      summary: fetch users from server
-      description: returns users from online
+      summary: fetch users
+      description: returns users from server
       operationId: fetchUsers
       responses:
-        '200':
-          $ref: '#/components/responses/UserArrayResponseBody'
+        2XX:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 123abc
+                  username:
+                    type: string
+                    example: bear
+                  score:
+                    type: integer
+                    example: 55
+                  active:
+                    type: boolean
+                    example: true
         default:
           description: Default error sample response
       tags:
         - users
-    post:
-      summary: creates a new user
-      description: stores user on server
-      operationId: createUser
-      requestBody:
-        $ref: '#/components/requestBodies/UserPostBody'
-      responses:
-        '201':
-          $ref: '#/components/responses/UserRespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - users
-  /users/{userId}:
-    summary: individual user operations
-    description: fetch, delete, update a user
-    parameters:
-      - name: userId
-        in: path
-        required: true
-        schema:
-          type: string
-          example: 1234abc
-    get:
-      summary: fetch a user
-      description: returns a user from the server
-      operationId: fetchUser
-      responses:
-        '200':
-          $ref: '#/components/responses/UserRespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - users
-    delete:
-      summary: delete a user
-      description: deletes user from server
-      operationId: deleteUser
-      responses:
-        default:
-          description: Default error sample response
-      tags:
-        - users
-    patch:
-      summary: update user
-      description: update user
-      operationId: updateUser
-      requestBody:
-        $ref: '#/components/requestBodies/UserPostBody'
-      responses:
-        '200':
-          $ref: '#/components/responses/UserRespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - users
-components:
-  responses:
-    UserRespBody:
-      description: success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/FullUser'
-    UserArrayResponseBody:
-      description: user array
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserArray'
-  requestBodies:
-    UserPostBody:
-      description: new user
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserPostBody'
-  schemas:
-    UserArray:
-      type: array
-      items:
-        $ref: '#/components/schemas/FullUser'
-    UserPostBody:
-      type: object
-      properties:
-        username:
-          type: string
-          example: bearc
-        score:
-          type: integer
-          example: 234
-        active:
-          type: boolean
-          example: true
-    FullUser:
-      allOf:
-        - $ref: '#/components/schemas/UserPostBody'
-        - type: object
-          properties:
-            id:
-              type: string
-              example: 1234abc
