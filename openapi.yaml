@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: MyAPI4am
+  title: My API 4 pm
   version: '1.0'
   description: my api to the data that...
   termsOfService: https://www.example.com/tos
@@ -14,47 +14,4 @@ info:
 servers:
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
-    description: My Demo server at github
-paths:
-  /users:
-    summary: users level operations
-    description: get and post users
-    get:
-      summary: fetch users
-      description: returns users from server
-      operationId: fetchUsers
-      responses:
-        2XX:
-          description: success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    example: 123abc
-                  username:
-                    type: string
-                    example: bear
-                  score:
-                    type: integer
-                    example: 55
-                  active:
-                    type: boolean
-                    example: true
-        default:
-          description: Default error sample response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: failed
-                  code:
-                    type: integer
-                    example: 340
-      tags:
-        - users
+    description: mock server on github
