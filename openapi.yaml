@@ -45,5 +45,16 @@ paths:
                     example: true
         default:
           description: Default error sample response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: failed
+                  code:
+                    type: integer
+                    example: 340
       tags:
         - users
