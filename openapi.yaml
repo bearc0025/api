@@ -12,6 +12,9 @@ info:
     name: License Here
     url: https://www.example.com/license
 servers:
+  - url: http://localhost:3000
+    variables: {}
+    description: local mock server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: mock server on github
@@ -24,15 +27,15 @@ paths:
       description: returns users from server
       operationId: fetchUsers
       responses:
-        '2XX':
-          description: "success"
-          content: 
+        2XX:
+          description: success
+          content:
             application/json:
               schema:
                 $ref: '#/components/schemas/FullUser'
         default:
           description: Default response
-          content: 
+          content:
             application/json:
               schema:
                 type: object
@@ -43,6 +46,37 @@ paths:
                   code:
                     type: integer
                     example: 980
+      tags:
+        - Users
+    post:
+      summary: create new User
+      description: store user on server
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: bear
+                score:
+                  type: integer
+                  example: 55
+                active:
+                  type: boolean
+                  example: true
+      responses:
+        201:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUser'
+        default:
+          description: Default error sample response
       tags:
         - Users
 components:
@@ -59,7 +93,6 @@ components:
         score:
           type: integer
           example: 55
-        active: 
+        active:
           type: boolean
           example: true
-    
