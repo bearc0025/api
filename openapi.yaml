@@ -12,14 +12,8 @@ info:
     name: License Here
     url: https://www.example.com/license
 servers:
-  - url: http://localhost:{port}
-    variables:
-      port:
-        default: '3000'
-        enum:
-          - '3000'
-          - '3001'
-        description: 'ports: test, production'
+  - url: http://localhost:3000
+    variables: {}
     description: local mock server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
@@ -32,17 +26,13 @@ paths:
       summary: fetch users
       description: returns users from server
       operationId: fetchUsers
-      parameters:
-        - name: userId
-          in: query
-          required: false
-          description: user id
-          schema:
-            type: string
-            example: 1234abc
       responses:
         2XX:
-          $ref: '#/components/responses/UserArrayResponseBody'
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUser'
         default:
           description: Default response
           content:
@@ -63,73 +53,40 @@ paths:
       description: store user on server
       operationId: createUser
       requestBody:
-        $ref: '#/components/requestBodies/UserPostBody'
-      responses:
-        '201':
-          $ref: '#/components/responses/UserRespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - Users
-  /users/{userId}:
-    summary: fetch, update, delete a user
-    description: user based operations
-    parameters:
-      - name: userId
-        in: path
         required: true
-        description: user id
-        schema:
-          type: string
-          example: 1234abc
-    get:
-      summary: fetch a user
-      description: returns a user from the server
-      operationId: fetchUser
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: bear
+                score:
+                  type: integer
+                  example: 55
+                active:
+                  type: boolean
+                  example: true
       responses:
-        2XX:
-          $ref: '#/components/responses/UserRespBody'
+        201:
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUser'
         default:
           description: Default error sample response
       tags:
         - Users
-    delete:
-      summary: ''
-      description: ''
-      operationId: ''
-      responses:
-        default:
-          description: Default error sample response
 components:
-  responses:
-    UserArrayResponseBody:
-      description: success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserArray'
-    UserRespBody:
-      description: created
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/FullUser'
-  requestBodies:
-    UserPostBody:
-      description: request body of user
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PostNewUser'
   schemas:
-    UserArray:
-      type: array
-      items:
-        $ref: '#/components/schemas/FullUser'
-    PostNewUser:
+    FullUser:
       type: object
       properties:
+        id:
+          type: string
+          example: 1234abc
         username:
           type: string
           example: bear
@@ -139,11 +96,3 @@ components:
         active:
           type: boolean
           example: true
-    FullUser:
-      allOf:
-        - $ref: '#/components/schemas/PostNewUser'
-        - type: object
-          properties:
-            id:
-              type: string
-              example: 1234abc
