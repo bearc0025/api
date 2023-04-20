@@ -57,17 +57,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                  example: bear
-                score:
-                  type: integer
-                  example: 55
-                active:
-                  type: boolean
-                  example: true
+              $ref: '#/components/schemas/PostNewUser'
       responses:
         201:
           description: created
@@ -81,12 +71,9 @@ paths:
         - Users
 components:
   schemas:
-    FullUser:
+    PostNewUser:
       type: object
       properties:
-        id:
-          type: string
-          example: 1234abc
         username:
           type: string
           example: bear
@@ -96,3 +83,11 @@ components:
         active:
           type: boolean
           example: true
+    FullUser:
+      allOf:
+        - $ref: '#/components/schemas/PostNewUser'
+        - type: object
+          properties:
+            id:
+              type: string
+              example: 1234abc
