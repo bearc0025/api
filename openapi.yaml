@@ -32,6 +32,14 @@ paths:
       summary: fetch users
       description: returns users from server
       operationId: fetchUsers
+      parameters:
+        - name: userId
+          in: query
+          required: false
+          description: user id
+          schema:
+            type: string
+            example: 1234abc
       responses:
         2XX:
           $ref: '#/components/responses/UserArrayResponseBody'
@@ -66,18 +74,18 @@ paths:
   /users/{userId}:
     summary: fetch, update, delete a user
     description: user based operations
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        description: user id
+        schema:
+          type: string
+          example: 1234abc
     get:
       summary: fetch a user
       description: returns a user from the server
       operationId: fetchUser
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          description: user id
-          schema:
-            type: string
-            example: 1234abc
       responses:
         2XX:
           $ref: '#/components/responses/UserRespBody'
@@ -85,6 +93,13 @@ paths:
           description: Default error sample response
       tags:
         - Users
+    delete:
+      summary: ''
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
 components:
   responses:
     UserArrayResponseBody:
