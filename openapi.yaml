@@ -28,7 +28,7 @@ paths:
       operationId: fetchUsers
       responses:
         2XX:
-          $ref: '#/components/responses/UserRespBody'
+          $ref: '#/components/responses/UserArrayResponseBody'
         default:
           description: Default response
           content:
@@ -65,6 +65,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/FullUser'
+    UserArrayResponseBody:
+      description: multiple users
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserArray'
   requestBodies:
     UserPostBody:
       required: true
@@ -73,6 +79,10 @@ components:
           schema:
             $ref: '#/components/schemas/PostNewUser'
   schemas:
+    UserArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/FullUser'
     PostNewUser:
       type: object
       properties:
