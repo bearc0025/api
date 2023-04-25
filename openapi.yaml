@@ -2,49 +2,12 @@ openapi: 3.0.1
 info:
   title: My API
   version: '1.0'
-  description: server api to deal with data for...
+  description: handles data online
   termsOfService: https://www.example.com/tos
   contact:
-    email: contact@example.com
-    name: Contact
+    email: support@example.com
+    name: Support
     url: https://www.example.com/contact
   license:
     name: License
     url: https://www.example.com/license
-servers:
-  - url: https://my-json-server.typicode.com/bearc0025/api
-    variables: {}
-    description: mock github server
-paths:
-  /users:
-    summary: operations on users
-    description: fetch all users, create new users
-    get:
-      summary: fetch all users
-      description: return users from server
-      operationId: fetchUsers
-      responses:
-        2XX:  
-          description: fetched users
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    example: 1234abc
-                  username:
-                    type: string
-                    example: bearc
-                  score:
-                    type: integer
-                    example: 55
-                  active:
-                    type: boolean
-                    example: true
-                  
-        default:
-          description: Default error sample response
-      tags:
-        - Users
