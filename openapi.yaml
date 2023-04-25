@@ -1,146 +1,30 @@
 openapi: 3.0.1
 info:
-  title: My API 4 pm
+  title: My API
   version: '1.0'
-  description: my api to the data that...
+  description: server api to deal with data for...
   termsOfService: https://www.example.com/tos
   contact:
-    email: bear@example.com
-    name: Support Team
+    email: contact@example.com
+    name: Contact
     url: https://www.example.com/contact
   license:
-    name: License Here
+    name: License
     url: https://www.example.com/license
 servers:
-  - url: http://localhost:{port}
-    variables:
-      port:
-        default: '3000'
-        enum:
-          - '3000'
-          - '3001'
-        description: 3000 is test, 3001 is dev
-    description: local mock server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
-    description: mock server on github
+    description: mock github server
 paths:
   /users:
-    summary: user operations
-    description: create and fetch users
+    summary: operations on users
+    description: fetch all users, create new users
     get:
-      summary: fetch users
-      description: returns users from server
+      summary: fetch all users
+      description: return users from server
       operationId: fetchUsers
-      parameters:
-        - name: userId
-          in: query
-          schema:
-            type: string
-            example: 1234abc
       responses:
-        2XX:
-          $ref: '#/components/responses/UserArrayResponseBody'
-        default:
-          description: Default response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: server message
-                  code:
-                    type: integer
-                    example: 980
-      tags:
-        - Users
-    post:
-      summary: create new user
-      description: store user on server
-      operationId: createUser
-      requestBody:
-        $ref: '#/components/requestBodies/UserPostBody'
-      responses:
-        '201':
-          $ref: '#/components/responses/UserRespBody'
         default:
           description: Default error sample response
       tags:
         - Users
-  /users/{userId}:
-    summary: user operations
-    description: fetch, delete, update and user
-    parameters:
-      - name: userId
-        in: path
-        required: true
-        description: user id
-        schema:
-          type: string
-          example: 1234abc
-    get:
-      summary: fetch user
-      description: return user from server
-      operationId: fetchUser
-      responses:
-        '200':
-          $ref: '#/components/responses/UserRespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - Users
-    delete:
-      summary: ''
-      description: ''
-      operationId: ''
-      responses:
-        default:
-          description: Default error sample response
-components:
-  responses:
-    UserRespBody:
-      description: success
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/FullUser'
-    UserArrayResponseBody:
-      description: multiple users
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserArray'
-  requestBodies:
-    UserPostBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PostNewUser'
-  schemas:
-    UserArray:
-      type: array
-      items:
-        $ref: '#/components/schemas/FullUser'
-    PostNewUser:
-      type: object
-      properties:
-        username:
-          type: string
-          example: bear
-        score:
-          type: integer
-          example: 55
-        active:
-          type: boolean
-          example: true
-    FullUser:
-      allOf:
-        - $ref: '#/components/schemas/PostNewUser'
-        - type: object
-          properties:
-            id:
-              type: string
-              example: 1234abc
