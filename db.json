@@ -1,34 +1,36 @@
 {
-  "users": [
-    {
-      "id": "1234abc",
-      "username": "bear",
-      "score": 55,
-      "active": true
-    },
-    {
-      "id": "qwerty",
-      "username": "jed",
-      "score": 553,
-      "active": true
-    },
-    {
-      "username": "schmeb",
-      "score": 59,
-      "active": true,
-      "id": "i1HYeyQ"
-    }
-  ],
-  "attempts": [
-    {
-      "id": "a1",
-      "score": 5,
-      "userId": "qwerty"
-    },
-    {
-      "id": "999",
-      "score": 8,
-      "userId": "qwerty"
-    }
-  ]
+	"games": [{
+		"id": "abcd",
+		"type": 5
+	}],
+	"users": [{
+			"id": "1234abc",
+			"username": "bear",
+			"score": 55,
+			"active": true
+		},
+		{
+			"id": "qwerty",
+			"username": "jed",
+			"score": 553,
+			"active": true
+		},
+		{
+			"username": "schmeb",
+			"score": 59,
+			"active": true,
+			"id": "i1HYeyQ"
+		}
+	],
+	"attempts": [{
+			"id": "a1",
+			"score": 5,
+			"userId": "qwerty"
+		},
+		{
+			"id": "999",
+			"score": 8,
+			"userId": "qwerty"
+		}
+	]
 }
