@@ -1,8 +1,4 @@
 {
-	"games": [{
-		"id": "abcd",
-		"type": 5
-	}],
 	"users": [{
 			"id": "1234abc",
 			"username": "bear",
