@@ -42,10 +42,7 @@ paths:
       description: stores user on server
       operationId: createUser
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PostNewUser'
+        $ref: '#/components/requestBodies/UserPostBody'
       responses:
         201:
           description: created user
@@ -58,6 +55,12 @@ paths:
       tags:
         - Users
 components:
+  requestBodies:
+    UserPostBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PostNewUser'
   schemas:
     PostNewUser:
       type: object
