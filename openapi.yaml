@@ -12,6 +12,9 @@ info:
     name: License
     url: https://www.example.com/license
 servers:
+  - url: http://localhost:3000
+    variables: {}
+    description: local mock server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: mock @ github
@@ -51,8 +54,3 @@ components:
         active:
           type: boolean
           example: false
-
-
-
-
-
