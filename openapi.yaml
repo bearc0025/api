@@ -12,6 +12,9 @@ info:
     name: License
     url: https://www.example.com/license
 servers:
+  - url: http://localhost:3000/
+    variables: {}
+    description: local mock server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: mock github server
@@ -24,12 +27,36 @@ paths:
       description: return users from server
       operationId: fetchUsers
       responses:
-        2XX:  
+        2XX:
           description: fetched users
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/FullUser'
+        default:
+          description: Default error sample response
+      tags:
+        - Users
+    post:
+      summary: create new user
+      description: stores user on server
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: amuser
+                score:
+                  type: integer
+                  example: 5
+                active:
+                  type: boolean
+                  example: true
+      responses:
         default:
           description: Default error sample response
       tags:
@@ -51,8 +78,3 @@ components:
         active:
           type: boolean
           example: true
-
-
-
-
-
