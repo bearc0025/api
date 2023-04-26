@@ -28,13 +28,9 @@ paths:
       operationId: fetchUsers
       responses:
         2XX:
-          description: fetched users
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FullUser'
+          $ref: '#/components/responses/UserArrayResponseBody'
         default:
-          description: Default error sample response
+          $ref: '#/components/responses/Default'
       tags:
         - Users
     post:
@@ -47,17 +43,29 @@ paths:
         201:
           $ref: '#/components/responses/UserRespBody'
         default:
-          description: Default error sample response
+          $ref: '#/components/responses/Default'
       tags:
         - Users
 components:
   responses:
+    Default:
+      description: non-standard response
+      content:
+        applcation/json:
+          schema:
+            $ref: '#/components/schemas/DefaultSchema'
     UserRespBody:
       description: created user
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/FullUser'
+    UserArrayResponseBody:
+      description: array of users
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserArray'
   requestBodies:
     UserPostBody:
       content:
@@ -65,6 +73,19 @@ components:
           schema:
             $ref: '#/components/schemas/PostNewUser'
   schemas:
+    UserArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/FullUser'
+    DefaultSchema:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 45
+        message:
+          type: string
+          example: something went wrong
     PostNewUser:
       type: object
       properties:
