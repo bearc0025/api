@@ -16,7 +16,10 @@ servers:
     variables:
       port:
         default: '3000'
-        enum: ['3000','3001','3002']
+        enum:
+          - '3000'
+          - '3001'
+          - '3002'
         description: '3000: dev, 3001: test, 3002: production'
     description: localhost mock server
   - url: https://my-json-server.typicode.com/bearc0025/api
@@ -45,6 +48,27 @@ paths:
         $ref: '#/components/requestBodies/UserPostBody'
       responses:
         '201':
+          $ref: '#/components/responses/UserRespBody'
+        default:
+          $ref: '#/components/responses/Default'
+      tags:
+        - Users
+  /users/{userId}:
+    summary: individual user operations
+    description: fetch, update, delete user
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 1234abc
+    get:
+      summary: fetch a user
+      description: returns a user from the server
+      operationId: fetchUser
+      responses:
+        '200':
           $ref: '#/components/responses/UserRespBody'
         default:
           $ref: '#/components/responses/Default'
