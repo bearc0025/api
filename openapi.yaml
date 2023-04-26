@@ -56,18 +56,18 @@ paths:
   /users/{userId}:
     summary: single user operations
     description: fetch, delete, update a user
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        description: user id 
+        schema:
+          type: string
+          example: 1234abc
     get:
       summary: fetch a user
       description: returns a user
       operationId: fetchUser
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          description: user id 
-          schema:
-            type: string
-            example: 1234abc
       responses:
         '200':
           $ref: '#/components/responses/UserRespBody'
