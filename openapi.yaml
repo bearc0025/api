@@ -12,8 +12,12 @@ info:
     name: License
     url: https://www.example.com/license
 servers:
-  - url: http://localhost:3000
-    variables: {}
+  - url: http://localhost:{port}
+    variables:
+      port:
+        default: '3000'
+        enum: ['3000','3001','3002']
+        description: '3000: dev, 3001: test, 3002: production'
     description: local mock server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
@@ -40,7 +44,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/UserPostBody'
       responses:
-        201:
+        '201':
           $ref: '#/components/responses/UserRespBody'
         default:
           description: Default error sample response
