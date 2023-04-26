@@ -2,135 +2,57 @@ openapi: 3.0.1
 info:
   title: My API
   version: '1.0'
-  description: server api to deal with data for...
+  description: handles data online
   termsOfService: https://www.example.com/tos
   contact:
-    email: contact@example.com
-    name: Contact
+    email: support@example.com
+    name: Support
     url: https://www.example.com/contact
   license:
     name: License
     url: https://www.example.com/license
 servers:
-  - url: http://localhost:{port}
-    variables:
-      port:
-        default: '3000'
-        enum:
-          - '3000'
-          - '3001'
-          - '3002'
-        description: '3000: dev, 3001: test, 3002: production'
-    description: localhost mock server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
-    description: mock github server
+    description: mock @ github
 paths:
   /users:
-    summary: operations on users
-    description: fetch all users, create new users
+    summary: fetch, create users from server
+    description: user level operations
     get:
-      summary: fetch all users
-      description: return users from server
+      summary: fetch users from server
+      description: returns users from server
       operationId: fetchUsers
       responses:
         2XX:
-          $ref: '#/components/responses/UserArrayResponseBody'
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUser'
         default:
-          $ref: '#/components/responses/Default'
-      tags:
-        - Users
-    post:
-      summary: create new user
-      description: stores user on server
-      operationId: createUser
-      requestBody:
-        $ref: '#/components/requestBodies/UserPostBody'
-      responses:
-        '201':
-          $ref: '#/components/responses/UserRespBody'
-        default:
-          $ref: '#/components/responses/Default'
-      tags:
-        - Users
-  /users/{userId}:
-    summary: individual user operations
-    description: fetch, update, delete user
-    parameters:
-      - name: userId
-        in: path
-        required: true
-        schema:
-          type: string
-          example: 1234abc
-    get:
-      summary: fetch a user
-      description: returns a user from the server
-      operationId: fetchUser
-      responses:
-        '200':
-          $ref: '#/components/responses/UserRespBody'
-        default:
-          $ref: '#/components/responses/Default'
+          description: Default error sample response
       tags:
         - Users
 components:
-  responses:
-    Default:
-      description: non-standard response
-      content:
-        applcation/json:
-          schema:
-            $ref: '#/components/schemas/DefaultSchema'
-    UserRespBody:
-      description: created user
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/FullUser'
-    UserArrayResponseBody:
-      description: array of users
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserArray'
-  requestBodies:
-    UserPostBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PostNewUser'
   schemas:
-    UserArray:
-      type: array
-      items:
-        $ref: '#/components/schemas/FullUser'
-    DefaultSchema:
+    FullUser:
       type: object
       properties:
-        code:
-          type: integer
-          example: 45
-        message:
+        id:
           type: string
-          example: something went wrong
-    PostNewUser:
-      type: object
-      properties:
+          example: 1234abc
         username:
           type: string
-          example: amuser
+          example: bear123
         score:
           type: integer
-          example: 5
+          example: 55
         active:
           type: boolean
-          example: true
-    FullUser:
-      allOf:
-        - $ref: '#/components/schemas/PostNewUser'
-        - type: object
-          properties:
-            id:
-              type: string
-              example: 1234abc
+          example: false
+
+
+
+
+
