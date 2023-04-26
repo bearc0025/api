@@ -45,24 +45,32 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                  example: amuser
-                score:
-                  type: integer
-                  example: 5
-                active:
-                  type: boolean
-                  example: true
+              $ref: '#/components/schemas/PostNewUser'
       responses:
+        201:
+          description: created user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUser'
         default:
           description: Default error sample response
       tags:
         - Users
 components:
   schemas:
+    PostNewUser:
+      type: object
+      properties:
+        username:
+          type: string
+          example: amuser
+        score:
+          type: integer
+          example: 5
+        active:
+          type: boolean
+          example: true
     FullUser:
       type: object
       properties:
