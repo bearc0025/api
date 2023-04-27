@@ -2,11 +2,11 @@ openapi: 3.0.1
 info:
   title: My API
   version: '1.0'
-  description: handles data online
+  description: server api to deal with data for...
   termsOfService: https://www.example.com/tos
   contact:
-    email: support@example.com
-    name: Support
+    email: contact@example.com
+    name: Contact
     url: https://www.example.com/contact
   license:
     name: License
@@ -21,28 +21,28 @@ servers:
           - '3001'
           - '3002'
         description: '3000: dev, 3001: test, 3002: production'
-    description: local mock server
+    description: localhost mock server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
-    description: mock @ github
+    description: mock github server
 paths:
   /users:
-    summary: fetch, create users from server
-    description: user level operations
+    summary: operations on users
+    description: fetch all users, create new users
     get:
-      summary: fetch users from server
-      description: returns users from server
+      summary: fetch all users
+      description: return users from server
       operationId: fetchUsers
       responses:
         2XX:
-          $ref: '#/components/responses/UserArrayRespBody'
+          $ref: '#/components/responses/UserArrayResponseBody'
         default:
-          description: Default error sample response
+          $ref: '#/components/responses/Default'
       tags:
         - Users
     post:
-      summary: create a new user
-      description: store user on server
+      summary: create new user
+      description: stores user on server
       operationId: createUser
       requestBody:
         $ref: '#/components/requestBodies/UserPostBody'
@@ -50,48 +50,55 @@ paths:
         '201':
           $ref: '#/components/responses/UserRespBody'
         default:
-          description: Default error sample response
+          $ref: '#/components/responses/Default'
       tags:
         - Users
   /users/{userId}:
-    summary: single user operations
-    description: fetch, delete, update a user
+    summary: individual user operations
+    description: fetch, update, delete user
     parameters:
-      - name: userId
-        in: path
-        required: true
-        description: user id 
-        schema:
-          type: string
-          example: 1234abc
+      - $ref: '#/components/parameters/UserId'
     get:
       summary: fetch a user
-      description: returns a user
+      description: returns a user from the server
       operationId: fetchUser
       responses:
         '200':
           $ref: '#/components/responses/UserRespBody'
         default:
-          description: Default error sample response
+          $ref: '#/components/responses/Default'
       tags:
         - Users
 components:
+  parameters:
+    UserId:
+      name: userId
+      in: path
+      required: true
+      schema:
+        type: string
+        example: 1234abc    
   responses:
+    Default:
+      description: non-standard response
+      content:
+        applcation/json:
+          schema:
+            $ref: '#/components/schemas/DefaultSchema'
     UserRespBody:
-      description: success
+      description: created user
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/FullUser'
-    UserArrayRespBody:
-      description: user array
+    UserArrayResponseBody:
+      description: array of users
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/UserArray'
   requestBodies:
     UserPostBody:
-      required: true
       content:
         application/json:
           schema:
@@ -101,18 +108,27 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/FullUser'
+    DefaultSchema:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 45
+        message:
+          type: string
+          example: something went wrong
     PostNewUser:
       type: object
       properties:
         username:
           type: string
-          example: bear123
+          example: amuser
         score:
           type: integer
-          example: 55
+          example: 5
         active:
           type: boolean
-          example: false
+          example: true
     FullUser:
       allOf:
         - $ref: '#/components/schemas/PostNewUser'
