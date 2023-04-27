@@ -74,6 +74,21 @@ paths:
       description: removes user from server
       operationId: deleteUser
       responses:
+        '200':
+          $ref: '#/components/responses/UserRespBody'
+        default:
+          description: Default error sample response
+      tags:
+        - Users
+    patch:
+      summary: update a user
+      description: store update on server
+      operationId: updateUser
+      requestBody:
+        $ref: '#/components/requestBodies/UserPostBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/UserRespBody'
         default:
           description: Default error sample response
       tags:
