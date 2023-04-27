@@ -69,13 +69,22 @@ paths:
           description: Default error sample response
       tags:
         - Users
+    delete:
+      summary: delete a user
+      description: removes user from server
+      operationId: deleteUser
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Users
 components:
   parameters:
     UserId:
       name: userId
       in: path
       required: true
-      description: user id 
+      description: user id
       schema:
         type: string
         example: 1234abc
