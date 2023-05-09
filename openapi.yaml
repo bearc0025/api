@@ -15,3 +15,16 @@ servers:
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: github mock server
+paths:
+  /users:
+    summary: user operations
+    description: GET and POST on Users
+    get:
+      summary: user operations
+      description: store and fetch users
+      operationId: fetchUsers
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Users
