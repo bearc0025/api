@@ -28,11 +28,7 @@ paths:
       operationId: fetchUsers
       responses:
         '200':
-          description: users returned
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FullUser'
+          $ref: '#/components/responses/UserRespBody'
         default:
           description: Default error sample response
       tags:
@@ -45,11 +41,7 @@ paths:
         $ref: '#/components/requestBodies/UserPostBody'
       responses:
         '201':
-          description: users returned
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FullUser'
+          $ref: '#/components/responses/UserRespBody'
         default:
           description: Default error sample response
       tags:
@@ -63,6 +55,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/PostNewUser'
+  responses:
+    UserRespBody:
+      description: users returned
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FullUser'
   schemas:
     PostNewUser:
       type: object
