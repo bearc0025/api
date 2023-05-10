@@ -2,51 +2,56 @@ openapi: 3.0.1
 info:
   title: My API
   version: '1.0'
-  description: api that serves...
-  termsOfService: https://www.example.com
+  description: An API that...
+  termsOfService: https://www.example.com/tos
   contact:
-    email: contact@example.com
+    email: support@example.com
     name: Support
-    url: https://www.example.com/support
+    url: https://www.example.com/contact
   license:
     name: License
     url: https://www.example.com/license
 servers:
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
-    description: mock server at github
+    description: github mock server
 paths:
   /users:
-    summary: create new users, fetch users
-    description: user based operations
+    summary: user operations
+    description: GET and POST on Users
     get:
-      summary: fetch users
-      description: returns users from server
+      summary: user operations
+      description: fetch users
       operationId: fetchUsers
       responses:
         200:
-          description: users returned
+          description: fetched users
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    example: 1234abc
-                  username:
-                    type: string
-                    example: bear
-                  score:
-                    type: integer
-                    example: 55
-                  active:
-                    type: boolean
-                    example: true
+                $ref: '#/components/schemas/FullUser'
         default:
           description: Default error sample response
       tags:
         - Users
+components:
+  schemas:
+    FullUser:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1234abc
+        username:
+          type: string
+          example: bear
+        score:
+          type: integer
+          example: 55
+        active:
+          type: boolean
+          example: true
+  
 
 
 
