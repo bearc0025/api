@@ -61,18 +61,12 @@ paths:
   /users/{userId}:
     summary: user based operations
     description: fetch, update and delete user
+    parameters:
+      - $ref: '#/components/parameters/UserId'
     get:
       summary: fetch a user
       description: returns a user from the server
       operationId: fetchUser
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          description: user id
-          schema:
-            type: string
-            example: 1234abc
       responses:
         '200':
           $ref: '#/components/responses/UserRespBody'
@@ -80,7 +74,25 @@ paths:
           description: Default error sample response
       tags:
         - Users
+    delete:
+      summary: delete a user
+      description: removes a user from the server
+      operationId: deleteUser
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Users
 components:
+  parameters:
+    UserId:
+      name: userId
+      in: path
+      required: true
+      description: user id
+      schema:
+        type: string
+        example: 1234abc
   requestBodies:
     UserPostBody:
       description: body of user in POST
