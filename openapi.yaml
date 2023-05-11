@@ -2,40 +2,50 @@ openapi: 3.0.1
 info:
   title: My API
   version: '1.0'
-  description: api that serves...
-  termsOfService: https://www.example.com
+  description: An API that...
+  termsOfService: https://www.example.com/tos
   contact:
-    email: contact@example.com
+    email: support@example.com
     name: Support
-    url: https://www.example.com/support
+    url: https://www.example.com/contact
   license:
     name: License
     url: https://www.example.com/license
 servers:
-  - url: http:localhost:3000
+  - url: http://localhost:3000/
     variables: {}
     description: local fake server
-  - url: https://my-json-server.typicode.com/bearc0025/api
-    variables: {}
-    description: mock server at github
+  - url: https://my-json-server.typicode.com/{account}/{repo}
+    variables:
+      account:
+        default: bearc0025
+        enum: ["bearc0025","myotheraccount"]
+        description: github account
+      repo:
+        default: api
+        enum:
+          - api
+          - reponame
+        description: repository name
+    description: github fake server
 paths:
   /users:
-    summary: create new users, fetch users
-    description: user based operations
+    summary: user operations
+    description: GET and POST on Users
     get:
-      summary: fetch users
-      description: returns users from server
+      summary: user operations
+      description: fetch users
       operationId: fetchUsers
       responses:
         '200':
-          $ref: '#/components/responses/UserArrayRespBody'
+          $ref: '#/components/responses/UserArrayResponse'
         default:
           description: Default error sample response
       tags:
         - Users
     post:
-      summary: create new user
-      description: store user on server
+      summary: create a new user
+      description: store new user on server
       operationId: createUser
       requestBody:
         $ref: '#/components/requestBodies/UserPostBody'
@@ -49,36 +59,36 @@ paths:
 components:
   requestBodies:
     UserPostBody:
-      description: body of user in POST
+      description: user content for POST
       required: true
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/PostNewUser'
   responses:
-    UserArrayRespBody:
-      description: array of users
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserArray'
     UserRespBody:
-      description: users returned
+      description: fetched users
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/FullUser'
+    UserArrayResponse:
+      description: multiple users
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserArray'
   schemas:
     UserArray:
       type: array
-      items: 
+      items:
         $ref: '#/components/schemas/FullUser'
     PostNewUser:
       type: object
       properties:
         username:
           type: string
-          example: bear
+          example: test2
         score:
           type: integer
           example: 55
