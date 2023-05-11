@@ -19,7 +19,9 @@ servers:
     variables:
       account:
         default: bearc0025
-        enum: ["bearc0025","myotheraccount"]
+        enum:
+          - bearc0025
+          - myotheraccount
         description: github account
       repo:
         default: api
@@ -51,6 +53,28 @@ paths:
         $ref: '#/components/requestBodies/UserPostBody'
       responses:
         '201':
+          $ref: '#/components/responses/UserRespBody'
+        default:
+          description: Default error sample response
+      tags:
+        - Users
+  /users/{userId}:
+    summary: single user operations
+    description: get, update, delete a user
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        description: user id
+        schema:
+          type: string
+          example: qwerty
+    get:
+      summary: fetch a user
+      description: returns a user from the server
+      operationId: fetchUser
+      responses:
+        '200':
           $ref: '#/components/responses/UserRespBody'
         default:
           description: Default error sample response
