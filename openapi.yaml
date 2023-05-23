@@ -11,3 +11,20 @@ info:
   license:
     name: License
     url: https://www.example.com/license
+servers:
+  - url: https://my-json-server.typicode.com/bearc0025/api
+    variables: {}
+    description: my fake github server
+paths:
+  /users:
+    summary: fetch and create users
+    description: returns users, stores users
+    get:
+      summary: fetch users from server
+      description: returns users
+      operationId: fetchUsers
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Users
