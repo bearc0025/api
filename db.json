@@ -1,6 +1,4 @@
 {
-	"scissors":[{"id":"1234"}],
-	"thing":[{"id":"asdf","scissorsId":"1234"}],
 	"users": [{
 			"id": "1234abc",
 			"username": "bear",
