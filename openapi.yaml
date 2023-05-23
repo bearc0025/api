@@ -2,29 +2,12 @@ openapi: 3.0.1
 info:
   title: My API
   version: '1.0'
-  description: some api for data that...
+  description: this api that deals with...
   termsOfService: https://www.example.com/tos
   contact:
-    email: api@example.com
+    email: team@example.com
     name: Support
     url: https://www.example.com/contact
   license:
     name: License
     url: https://www.example.com/license
-servers:
-  - url: https://my-json-server.typicode.com/bearc0025/api
-    variables: {}
-    description: fake github server
-paths:
-  /users:
-    summary: user operations for fetching and creating new users
-    description: fetch and store users
-    get:
-      summary: fetch users from server
-      description: returns users
-      operationId: fetchUsers
-      responses:
-        default:
-          description: Default error sample response
-      tags:
-        - Users
