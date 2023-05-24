@@ -28,7 +28,7 @@ paths:
       operationId: fetchUsers
       responses:
         '200':
-          $ref: '#/components/responses/UserRespBody'
+          $ref: '#/components/responses/UserArrayResponse'
         default:
           description: Default error sample response
       tags:
@@ -54,6 +54,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/FullUser'
+    UserArrayResponse:
+      description: array of users
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserArray'
   requestBodies:
     UserPostBody:
       required: true
@@ -62,6 +68,10 @@ components:
           schema:
             $ref: '#/components/schemas/PostNewUser'
   schemas:
+    UserArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/FullUser'
     PostNewUser:
       type: object
       properties:
