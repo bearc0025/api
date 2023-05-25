@@ -15,9 +15,16 @@ servers:
   - url: http://localhost:3000
     variables: {}
     description: local fake server
-  - url: https://my-json-server.typicode.com/bearc0025/api
-    variables: {}
-    description: my fake github server
+  - url: https://my-json-server.typicode.com/bearc0025/{repo}
+    variables:
+      repo:
+        default: api
+        enum:
+          - api
+          - repo2
+          - repo3
+        description: 'api: test, repo2: dev, repo3: deploy'
+    description: github fake servers
 paths:
   /users:
     summary: fetch and create users
@@ -28,13 +35,13 @@ paths:
       operationId: fetchUsers
       responses:
         '200':
-          $ref: '#/components/responses/UserArrayRespBody' 
+          $ref: '#/components/responses/UserArrayResponse'
         default:
           description: Default error sample response
       tags:
         - Users
     post:
-      summary: create new user
+      summary: create a new user
       description: store user on server
       operationId: createUser
       requestBody:
@@ -47,15 +54,15 @@ paths:
       tags:
         - Users
 components:
-  responses: 
+  responses:
     UserRespBody:
       description: success
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/FullUser' 
-    UserArrayRespBody:
-      description: user array
+            $ref: '#/components/schemas/FullUser'
+    UserArrayResponse:
+      description: array of users
       content:
         application/json:
           schema:
@@ -65,8 +72,8 @@ components:
       required: true
       content:
         application/json:
-         schema:
-          $ref: '#/components/schemas/PostNewUser'
+          schema:
+            $ref: '#/components/schemas/PostNewUser'
   schemas:
     UserArray:
       type: array
@@ -86,9 +93,9 @@ components:
           example: true
     FullUser:
       allOf:
-      - $ref: '#/components/schemas/PostNewUser'
-      - type: object
-        properties:
-          id:
-            type: string
-            example: 1234bac
+        - $ref: '#/components/schemas/PostNewUser'
+        - type: object
+          properties:
+            id:
+              type: string
+              example: 1234abc
