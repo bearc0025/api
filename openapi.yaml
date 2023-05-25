@@ -12,19 +12,19 @@ info:
     name: License
     url: https://www.example.com/license
 servers:
-  - url: http://localhost:3000
-    variables: {}
-    description: local fake server
-  - url: https://my-json-server.typicode.com/bearc0025/{repo}
+  - url: http://localhost:{port}
     variables:
-      repo: 
-        default: api
+      port:
+        default: '3000'
         enum:
-          - api
-          - repo2
-          - repo3
-        description: 'api: test, repo2: dev, repo3: deploy'
-    description: github fake servers
+          - '3000'
+          - '3001'
+          - '3002'
+        description: '3000: dev, 3001: test, 3002: prod'
+    description: local fake
+  - url: https://my-json-server.typicode.com/bearc0025/api
+    variables: {}
+    description: my fake github server
 paths:
   /users:
     summary: fetch and create users
@@ -35,13 +35,13 @@ paths:
       operationId: fetchUsers
       responses:
         '200':
-          $ref: '#/components/responses/UserArrayResponse'
+          $ref: '#/components/responses/UserArrayRespBody'
         default:
           description: Default error sample response
       tags:
         - Users
     post:
-      summary: create a new user
+      summary: create new user
       description: store user on server
       operationId: createUser
       requestBody:
@@ -54,20 +54,20 @@ paths:
       tags:
         - Users
   /users/{userId}:
-    summary: operations on a individual user
-    description: update, fetch or delete a user
+    summary: fetch, update and delete users
+    description: returns, updates or deletes users from server
     parameters:
-      - name: userId
-        in: path
-        required: true
-        description: user id
-        schema:
-          type: string
-          example: 1234abc
+      - $ref: '#/components/parameters/UserId'
     get:
-      summary: fetch a user
-      description: returns a user from the server
+      summary: fetch a user from the server
+      description: returns a user
       operationId: fetchUser
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            example: 2
       responses:
         '200':
           $ref: '#/components/responses/UserRespBody'
@@ -77,7 +77,7 @@ paths:
         - Users
     delete:
       summary: delete a user
-      description: remove from server
+      description: removes user from server
       operationId: deleteUser
       responses:
         default:
@@ -85,6 +85,15 @@ paths:
       tags:
         - Users
 components:
+  parameters:
+    UserId:
+      name: userId
+      in: path
+      required: true
+      description: user id
+      schema:
+        type: string
+        example: 1234abc    
   responses:
     UserRespBody:
       description: success
@@ -92,8 +101,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/FullUser'
-    UserArrayResponse:
-      description: array of users
+    UserArrayRespBody:
+      description: user array
       content:
         application/json:
           schema:
@@ -129,4 +138,4 @@ components:
           properties:
             id:
               type: string
-              example: 1234abc
+              example: 1234bac
