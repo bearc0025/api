@@ -17,7 +17,7 @@ servers:
     description: local fake server
   - url: https://my-json-server.typicode.com/bearc0025/{repo}
     variables:
-      repo:
+      repo: 
         default: api
         enum:
           - api
