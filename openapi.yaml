@@ -2,55 +2,12 @@ openapi: 3.0.1
 info:
   title: My API
   version: '1.0'
-  description: some api that...
+  description: some api...
   termsOfService: https://www.example.com/tos
   contact:
     email: team@example.com
-    name: Support
+    name: Support Team
     url: https://www.example.com/contact
   license:
     name: License
     url: https://www.example.com/license
-servers:
-  - url: https://my-json-server.typicode.com/bearc0025/api
-    variables: {}
-    description: my github fake server
-paths:
-  /users:
-    summary: user based operations
-    description: fetch and create users
-    get:
-      summary: fetch users
-      description: returns users from server
-      operationId: fetchUsers
-      responses:
-        200:
-          description: success, user
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FullUser'
-        default:
-          description: Default error sample response
-      tags:
-        - Users
-components:
-  schemas:
-    FullUser:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 1234abc
-        username:
-          type: string
-          example: bearc
-        score:
-          type: integer
-          example: 55
-        active:
-          type: boolean
-          example: true
-    
-
-
