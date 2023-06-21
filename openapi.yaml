@@ -12,6 +12,9 @@ info:
     name: License
     url: https://www.example.com/license
 servers:
+  - url: http://localhost:3000
+    variables: {}
+    description: my local fake server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: github fake server
@@ -24,7 +27,7 @@ paths:
       description: fetch and store users from server
       operationId: fetchUsers
       responses:
-        200:
+        '200':
           description: success
           content:
             application/json:
@@ -39,7 +42,7 @@ components:
     FullUser:
       type: object
       properties:
-        id: 
+        id:
           type: string
           example: 1234abc
         username:
@@ -51,9 +54,3 @@ components:
         active:
           type: boolean
           example: true
-    
-
-
-
-
-
