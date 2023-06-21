@@ -37,6 +37,38 @@ paths:
           description: Default error sample response
       tags:
         - Users
+    post:
+      summary: create a new user
+      description: store new user on server
+      operationId: createUser
+      requestBody:
+        description: user
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: bearc
+                score:
+                  type: integer
+                  example: 55
+                active:
+                  type: boolean
+                  example: true
+      responses:
+        '201':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullUser'
+        default:
+          description: Default error sample response
+      tags:
+        - Users
 components:
   schemas:
     FullUser:
