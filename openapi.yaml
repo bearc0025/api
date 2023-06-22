@@ -12,10 +12,8 @@ info:
     name: License
     url: https://www.example.com/license
 servers:
-  - url: https://my-json-server.typicode.com/bearc0025/api
-    variables: {}
-    description: github fake server
   - url: http://localhost:{port}
+    description: local fake server
     variables:
       port:
         default: '3000'
@@ -24,7 +22,9 @@ servers:
           - '3001'
           - '3002'
         description: '3000: dev, 3001: test, 3002: prod'
-    description: local fake server
+  - url: https://my-json-server.typicode.com/bearc0025/api
+    description: github fake server
+    variables: {}
 paths:
   /users:
     summary: fetch and create users
@@ -42,7 +42,7 @@ paths:
         - Users
     post:
       summary: create a new user
-      description: store new user on server
+      description: store user on server
       operationId: createUser
       requestBody:
         $ref: '#/components/requestBodies/UserPostBody'
@@ -54,8 +54,8 @@ paths:
       tags:
         - Users
   /users/{userId}:
-    summary: user based operations
-    description: fetch, update and delete a user
+    summary: user operations
+    description: get, update, delete user
     parameters:
       - $ref: '#/components/parameters/UserId'
     get:
@@ -69,37 +69,22 @@ paths:
           description: Default error sample response
       tags:
         - Users
-    delete:
-      summary: delete a user
-      description: remove user from server
-      operationId: deleteUser
-      responses:
-        default:
-          description: Default error sample response
-      tags:
-        - Users
-    patch:
-      summary: update user
-      description: change user on server
-      operationId: updateUser
-      requestBody:
-        $ref: '#/components/requestBodies/UserPostBody'
-      responses:
-        '200':
-          $ref: '#/components/responses/UserRespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - Users
 components:
   parameters:
     UserId:
       name: userId
       in: path
       required: true
+      description: user id
       schema:
         type: string
-        example: qwerty
+        example: 1234abc
+  requestBodies:
+    UserPostBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PostNewUser'
   responses:
     UserRespBody:
       description: success
@@ -113,14 +98,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/UserArray'
-  requestBodies:
-    UserPostBody:
-      description: user
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PostNewUser'
   schemas:
     UserArray:
       type: array
