@@ -60,21 +60,6 @@ paths:
         - Users
 components:
   schemas:
-    FullUser:
-      type: object
-      properties:
-        id:
-          type: string
-          example: qwerty
-        username:
-          type: string
-          example: bear
-        score:
-          type: integer
-          example: 55
-        active:
-          type: boolean
-          example: true
     PostNewUser:
       type: object
       properties:
@@ -87,4 +72,11 @@ components:
         active:
           type: boolean
           example: true
-    
+    FullUser:
+      allOf:
+        - $ref: '#/components/schemas/PostNewUser'
+        - type: object
+          properties:
+            id:
+              type: string
+              example: qwerty
