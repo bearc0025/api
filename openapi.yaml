@@ -12,9 +12,6 @@ info:
     name: License
     url: https://www.example.com/license
 servers:
-  - url: http://localhost:3000
-    variables: {}
-    description: local mock server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: mock server
@@ -32,25 +29,29 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    example: 3434sdf
-                  username:
-                    type: string
-                    example: bear
-                  score:
-                    type: integer
-                    example: 55
-                  active:
-                    type: boolean
-                    example: true
+                $ref: '#/components/schemas/FullUser'
         default:
           description: Default error sample response
       tags:
         - Users
-        
+components:
+  schemas:
+    FullUser:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 3434sdf
+        username:
+          type: string
+          example: bear
+        score:
+          type: integer
+          example: 55
+        active:
+          type: boolean
+          example: true
+    
         
         
         
