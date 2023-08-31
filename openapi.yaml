@@ -12,8 +12,14 @@ info:
     name: License
     url: https://www.example.com/license
 servers:
-  - url: http://localhost:3000
-    variables: {}
+  - url: http://localhost:{port}
+    variables:
+      port:
+        default: '3000'
+        enum:
+          - '3000'
+          - '3001'
+        description: 'test: 3000, prod: 3001'
     description: local mock server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
@@ -59,7 +65,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/UserArray"
+            $ref: '#/components/schemas/UserArray'
   requestBodies:
     UserPostBody:
       required: true
