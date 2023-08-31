@@ -55,18 +55,12 @@ paths:
   /users/{userId}:
     summary: user based operations
     description: get, update and delete a user
+    parameters:
+      - $ref: '#/components/parameters/UserId'
     get:
       summary: fetch 1 user
       description: returns a user from the server
       operationId: fetchUser
-      parameters:
-        - name: userId
-          in: path
-          required: true
-          description: user id
-          schema:
-            type: string
-            example: qwerty
       responses:
         '200':
           $ref: '#/components/responses/UserResp'
@@ -75,6 +69,15 @@ paths:
       tags:
         - Users
 components:
+  parameters:
+    UserId:
+      name: userId
+      in: path
+      required: true
+      description: user id
+      schema:
+        type: string
+        example: qwerty
   responses:
     UserResp:
       description: successful request
