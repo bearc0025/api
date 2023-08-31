@@ -19,7 +19,7 @@ servers:
         enum:
           - '3000'
           - '3001'
-        description: 'test: 3000, prod: 3001'
+        description: 'test port: 3000, prod: 3001'
     description: local mock server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
@@ -52,54 +52,7 @@ paths:
           description: Default error sample response
       tags:
         - Users
-  /users/{userId}:
-    summary: user based operations
-    description: get, update and delete a user
-    parameters:
-      - $ref: '#/components/parameters/UserId'
-    get:
-      summary: fetch 1 user
-      description: returns a user from the server
-      operationId: fetchUser
-      responses:
-        '200':
-          $ref: '#/components/responses/UserResp'
-        default:
-          description: Default error sample response
-      tags:
-        - Users
-    delete:
-      summary: delete a user
-      description: remove user from server
-      operationId: deleteUser
-      responses:
-        default:
-          description: Default error sample response
-      tags:
-        - Users
-    patch:
-      summary: update a user
-      description: store new value(s) for user
-      operationId: updateUser
-      requestBody:
-        $ref: '#/components/requestBodies/UserPostBody'
-      responses:
-        '200':
-          $ref: '#/components/responses/UserResp'
-        default:
-          description: Default error sample response
-      tags:
-        - Users
 components:
-  parameters:
-    UserId:
-      name: userId
-      in: path
-      required: true
-      description: user id
-      schema:
-        type: string
-        example: qwerty
   responses:
     UserResp:
       description: successful request
