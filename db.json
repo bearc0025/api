@@ -1,58 +1,32 @@
-openapi: 3.0.1
-info:
-  title: My API
-  version: '1.0'
-  description: some api that...
-  termsOfService: https://www.example.com/
-  contact:
-    email: contact@example.com
-    name: Support Team
-    url: https://www.example.com/support
-  license:
-    name: License
-    url: https://www.example.com/license
-servers:
-  - url: https://my-json-server.typicode.com/bearc0025/api
-    variables: {}
-    description: github fake server
-paths:
-  /users:
-    summary: user operations
-    description: fetch users and create new users
-    get:
-      summary: fetch users
-      description: returns users from server
-      operationId: fetchUsers
-      responses:
-        '200':
-          description: successful request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    example: 1234abc
-                  username:
-                    type: string
-                    example: bearc
-                  score:
-                    type: integer
-                    example: 44
-                  active:
-                    type: boolean
-                    example: true
-        default:
-          description: Default error sample response
-      tags:
-        - Users
-
-
-
-
-
-
-
-
-
+{
+	"users": [{
+			"id": "1234abc",
+			"username": "bear",
+			"score": 55,
+			"active": true
+		},
+		{
+			"id": "qwerty",
+			"username": "jed",
+			"score": 553,
+			"active": true
+		},
+		{
+			"username": "schmeb",
+			"score": 59,
+			"active": true,
+			"id": "i1HYeyQ"
+		}
+	],
+	"attempts": [{
+			"id": "a1",
+			"score": 5,
+			"userId": "qwerty"
+		},
+		{
+			"id": "999",
+			"score": 8,
+			"userId": "qwerty"
+		}
+	]
+}
