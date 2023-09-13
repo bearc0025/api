@@ -29,25 +29,29 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    example: asdfasd
-                  username:
-                    type: string
-                    example: bear
-                  score:
-                    type: integer
-                    example: 5
-                  active:
-                    type: boolean
-                    example: tru
+                $ref: '#/components/schemas/FullUser'
         default:
           description: Default error sample response
       tags:
         - Users
-
+components:
+  schemas:
+    FullUser:
+      type: object
+      properties:
+        id:
+          type: string
+          example: asdfasd
+        username:
+          type: string
+          example: bear
+        score:
+          type: integer
+          example: 5
+        active:
+          type: boolean
+          example: true
+    
 
 
 
