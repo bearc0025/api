@@ -28,11 +28,7 @@ paths:
       operationId: fetchUsers
       responses:
         '200':
-          description: successful response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FullUser'
+          $ref: '#/components/responses/UserArrayRespBody'
         default:
           description: Default error sample response
       tags:
@@ -42,46 +38,57 @@ paths:
       description: store user on server
       operationId: createUser
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                  example: asdfdas
-                score:
-                  type: integer
-                  example: 56
-                active:
-                  type: boolean
-                  example: true
+        $ref: '#/components/requestBodies/UserPostBody'
       responses:
         '201':
-          description: successful response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FullUser'
+          $ref: '#/components/responses/UserRespBody'
         default:
           description: Default error sample response
       tags:
         - Users
 components:
+  requestBodies:
+    UserPostBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PostNewUser'
+  responses:
+    UserRespBody:
+      description: successful response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FullUser'
+    UserArrayRespBody:
+      description: user array
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserArray'
   schemas:
-    FullUser:
+    UserArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/FullUser'
+    PostNewUser:
       type: object
       properties:
-        id:
-          type: string
-          example: asdfasd
         username:
           type: string
-          example: bear
+          example: asdfdas
         score:
           type: integer
-          example: 5
+          example: 56
         active:
           type: boolean
           example: true
+    FullUser:
+      allOf:
+        - $ref: '#/components/schemas/PostNewUser'
+        - type: object
+          properties:
+            id:
+              type: string
+              example: asdfasd
