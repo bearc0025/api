@@ -12,8 +12,15 @@ info:
     name: License
     url: https://www.example.com/license
 servers:
-  - url: http://localhost:3000
-    variables: {}
+  - url: http://localhost:{port}
+    variables:
+      port:
+        default: '3000'
+        enum:
+          - '3000'
+          - '4001'
+          - '3002'
+        description: 'test: 3000, dev: 4001, prod: 3002'
     description: local fake server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
