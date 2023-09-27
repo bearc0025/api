@@ -46,17 +46,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                  example: bearc
-                score:
-                  type: integer
-                  example: 57
-                active:
-                  type: boolean
-                  example: true
+              $ref: '#/components/schemas/PostNewUser'
       responses:
         '201':
           description: successful request
@@ -69,13 +59,10 @@ paths:
       tags:
         - Users
 components:
-  schemas:
-    FullUser:
+  schemas:  
+    PostNewUser:
       type: object
       properties:
-        id:
-          type: string
-          example: 1234abc
         username:
           type: string
           example: bearc
@@ -85,3 +72,11 @@ components:
         active:
           type: boolean
           example: true
+    FullUser:
+      allOf:
+        - $ref: '#/components/schemas/PostNewUser'
+        - type: object
+          properties:
+            id:
+              type: string
+              example: 1234abc
