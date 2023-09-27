@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: My API
-  version: '1.0'
+  version: 1.0.1
   description: some api for data that...
   termsOfService: https://www.example.com/tos
   contact:
@@ -12,9 +12,6 @@ info:
     name: License
     url: https://www.example.com/license
 servers:
-  - url: http://localhost:3000
-    variables: {}
-    description: fake local server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: fake github server
@@ -28,67 +25,34 @@ paths:
       operationId: fetchUsers
       responses:
         '200':
-          $ref: '#/components/responses/UserArrayRespBody'
+          description: successful request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 1234abc
+                  username:
+                    type: string
+                    example: bearc
+                  score:
+                    type: integer
+                    example: 57
+                  active:
+                    type: boolean
+                    example: true
+              examples:
+                oneuser:
+                  value: |-
+                    {
+                      "id": "1234abcd",
+                      "username": "bearx",
+                      "score": 57,
+                      "active": true
+                    }
         default:
           description: Default error sample response
       tags:
         - Users
-    post:
-      summary: create new user
-      description: stores user on server
-      operationId: createUser
-      requestBody:
-        $ref: '#/components/requestBodies/UserPostBody'
-      responses:
-        '201':
-          $ref: '#/components/responses/UserRespBody'
-        default:
-          description: Default error sample response
-      tags:
-        - Users
-components:
-  responses:
-    UserRespBody:
-      description: successful
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/FullUser'
-    UserArrayRespBody:
-      description: User Array
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserArray'
-  requestBodies:
-    UserPostBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PostNewUser'
-  schemas:
-    UserArray:
-      type: array
-      items:
-        $ref: '#/components/schemas/FullUser'
-    PostNewUser:
-      type: object
-      properties:
-        username:
-          type: string
-          example: bear
-        score:
-          type: integer
-          example: 56
-        active:
-          type: boolean
-          example: true
-    FullUser:
-      allOf:
-        - $ref: '#/components/schemas/PostNewUser'
-        - type: object
-          properties:
-            id:
-              type: string
-              example: 1234abc
