@@ -12,12 +12,19 @@ info:
     name: License
     url: https://www.example.com/license
 servers:
-  - url: http://localhost:3000/
-    variables: {}
-    description: fake local server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: fake github server
+  - url: http://localhost:{port}
+    variables:
+      port:
+        default: '3000'
+        enum:
+          - '3000'
+          - '3001'
+          - '3002'
+        description: 'test: 3000, dev: 3001, prod: 3002'
+    description: local fake server
 paths:
   /users:
     summary: user based operations
@@ -67,7 +74,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/PostNewUser'
-  schemas:  
+  schemas:
     UserArray:
       type: array
       items:
