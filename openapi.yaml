@@ -12,9 +12,16 @@ info:
     name: License
     url: https://www.example.com/license
 servers:
-  - url: http://localhost:3000/
-    variables: {}
-    description: fake local server
+  - url: http://localhost:{port}
+    variables: 
+      port:
+        default: '3000'
+        enum:
+          - '3000'
+          - '3001'
+          - '3002'
+        description: 'test: 3000, dev: 3001, prod: 3002'
+    description: local fake server
   - url: https://my-json-server.typicode.com/bearc0025/api
     variables: {}
     description: fake github server
@@ -75,7 +82,7 @@ components:
     PostNewUser:
       type: object
       properties:
-        username: 
+        username:
           type: string
           example: bearc2
         score:
@@ -92,4 +99,3 @@ components:
             id:
               type: string
               example: 1234
-        
