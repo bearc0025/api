@@ -73,17 +73,10 @@ components:
           type: boolean
           example: false
     FullUser:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 1234abc
-        username:
-          type: string
-          example: bearc
-        score:
-          type: integer
-          example: 56
-        active:
-          type: boolean
-          example: false
+      allOf:
+        - $ref: '#/components/schemas/PostNewUser'
+        - type: object
+          properties:
+            id:
+              type: string
+              example: 1234abc
