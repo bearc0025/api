@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: My API
-  version: '1.0'
+  version: '2.0'
   description: an api that serves data for...
   termsOfService: https://www.example.com/tos
   contact:
@@ -16,7 +16,10 @@ servers:
     variables:
       port:
         default: '3000'
-        enum: ['3000','3001','3002']
+        enum:
+          - '3000'
+          - '3001'
+          - '3002'
         description: 'dev: 3000, test: 3001, prod: 3002'
     description: fake local server
   - url: https://my-json-server.typicode.com/bearc0025/api
@@ -45,6 +48,27 @@ paths:
         $ref: '#/components/requestBodies/UserPostBody'
       responses:
         '201':
+          $ref: '#/components/responses/UserRespBody'
+        default:
+          description: Default error sample response
+      tags:
+        - Users
+  /users/{userId}:
+    summary: individual user operations
+    description: get, update and delete user
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+          example: 1234abc
+    get:
+      summary: fetch a user
+      description: returns a user from the server
+      operationId: fetchUser
+      responses:
+        '200':
           $ref: '#/components/responses/UserRespBody'
         default:
           description: Default error sample response
@@ -88,6 +112,9 @@ components:
         active:
           type: boolean
           example: false
+        location:
+          type: string
+          example: test
     FullUser:
       allOf:
         - $ref: '#/components/schemas/PostNewUser'
